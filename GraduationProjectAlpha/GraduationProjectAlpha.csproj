@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Profiles\" />
   </ItemGroup>
 
 </Project>
