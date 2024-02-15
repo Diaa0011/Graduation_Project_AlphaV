@@ -1,6 +1,6 @@
 ﻿namespace GraduationProjectAlpha.Models.Enums
 {
-    public enum CommentInteraction
+    public enum VoteType
     {
         Upvote = 1,
         Downvote = -1
