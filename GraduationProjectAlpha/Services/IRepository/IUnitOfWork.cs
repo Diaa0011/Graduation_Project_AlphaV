@@ -2,6 +2,7 @@
 {
     public interface IUnitOfWork
     {
+        IStudentRepository Student { get; }
         void Save();
     }
 }

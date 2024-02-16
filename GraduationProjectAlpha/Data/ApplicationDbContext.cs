@@ -30,11 +30,11 @@ namespace GraduationProjectAlpha.DbContexts
 
                 }
                 );
-            //modelBuilder.Entity<AssessmentLessonLinking>()
-            // .HasOne(p => p.Lesson)
-            // .WithMany(l => l.AssessmentLessonLinkings)
-            // .HasForeignKey(p => p.LessonId)
-            // .OnDelete(DeleteBehavior.NoAction);
+            
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
         }
     }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GraduationProjectAlpha.Migrations
 {
     /// <inheritdoc />
-    public partial class adding_student : Migration
+    public partial class reconstruct : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -82,7 +82,7 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "CourseId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,7 +104,7 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Question",
                         principalColumn: "QuestionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,13 +126,13 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "CourseId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CourseEnrollment_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,13 +154,13 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Question",
                         principalColumn: "QuestionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentQuestionInteraction_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,7 +182,7 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.SectionId,
                         principalTable: "Section",
                         principalColumn: "SectionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,7 +204,7 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.ModuleId,
                         principalTable: "Module",
                         principalColumn: "ModuleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,7 +229,7 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.ModuleId,
                         principalTable: "Module",
                         principalColumn: "ModuleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,13 +251,13 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.AssessmentId,
                         principalTable: "Assessment",
                         principalColumn: "AssessmentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AssessmentQuestion_Question_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Question",
                         principalColumn: "QuestionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -278,13 +278,13 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.AssessmentId,
                         principalTable: "Assessment",
                         principalColumn: "AssessmentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentAssessmentInteraction_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -304,13 +304,13 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.AssessmentId,
                         principalTable: "Assessment",
                         principalColumn: "AssessmentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AssessmentLessonLinking_Lesson_LessonId",
                         column: x => x.LessonId,
                         principalTable: "Lesson",
                         principalColumn: "LessonId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -331,13 +331,13 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.LessonId,
                         principalTable: "Lesson",
                         principalColumn: "LessonId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comment_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -358,13 +358,13 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.LessonId,
                         principalTable: "Lesson",
                         principalColumn: "LessonId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentLessonInteraction_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -385,19 +385,19 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.CommentId,
                         principalTable: "Comment",
                         principalColumn: "CommentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CommentVote_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "Students",
                 columns: new[] { "StudentId", "DateOfBirth", "Email", "FName", "LName", "Level", "PhoneNumber", "Sex" },
-                values: new object[] { 1, new DateTime(2024, 2, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), "AhmedMahmoud@Mail.com", "Ahmed", "Mahmoud", 12, "1234567890", 0 });
+                values: new object[] { 1, new DateTime(2001, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "AhmedMahmoud@Mail.com", "Ahmed", "Mahmoud", 12, "1234567890", 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assessment_ModuleId",

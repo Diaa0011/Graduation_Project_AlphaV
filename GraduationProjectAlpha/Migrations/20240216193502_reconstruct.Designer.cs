@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProjectAlpha.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240216154540_adding_student1")]
-    partial class adding_student1
+    [Migration("20240216193502_reconstruct")]
+    partial class reconstruct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -503,7 +503,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Module", "Module")
                         .WithMany("Assessments")
                         .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Module");
@@ -514,13 +514,13 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
                         .WithMany("AssessmentLessonLinkings")
                         .HasForeignKey("AssessmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
                         .WithMany("AssessmentLessonLinkings")
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Assessment");
@@ -533,13 +533,13 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
                         .WithMany("AssessmentQuestions")
                         .HasForeignKey("AssessmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
                         .WithMany("AssessmentQuestions")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Assessment");
@@ -552,7 +552,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
                         .WithMany("Choices")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Question");
@@ -563,13 +563,13 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
                         .WithMany("Comments")
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("Comments")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Lesson");
@@ -582,13 +582,13 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Comment", "Comment")
                         .WithMany("CommentVotes")
                         .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("CommentVotes")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Comment");
@@ -601,13 +601,13 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Course", "Course")
                         .WithMany("CourseEnrollments")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("CourseEnrollments")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -620,7 +620,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Module", "Module")
                         .WithMany("Lessons")
                         .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Module");
@@ -631,7 +631,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Section", "Section")
                         .WithMany("Modules")
                         .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Section");
@@ -642,7 +642,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Course", "Course")
                         .WithMany("Sections")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -653,13 +653,13 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
                         .WithMany("StudentAssessmentInteractions")
                         .HasForeignKey("AssessmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("StudentAssessmentInteractions")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Assessment");
@@ -672,13 +672,13 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
                         .WithMany("StudentLessonInteractions")
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("StudentLessonInteractions")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Lesson");
@@ -691,13 +691,13 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
                         .WithMany("StudentQuestionInteractions")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("StudentQuestionInteractions")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Question");
