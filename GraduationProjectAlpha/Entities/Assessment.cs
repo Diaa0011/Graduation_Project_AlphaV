@@ -1,9 +1,11 @@
 ﻿using GraduationProjectAlpha.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Entities
 {
     public class Assessment
     {
+        [Key]
         public int AssessmentId { get; set; }
         public AssessmentType AssessmentType { get; set; }
         public List<AssessmentLessonLinking>? AssessmentLessonLinkings { get; set; }

@@ -1,7 +1,10 @@
-﻿namespace GraduationProjectAlpha.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GraduationProjectAlpha.Entities
 {
     public class Choice
     {
+        [Key]
         public int ChoiceId { get; set; }
         public string? ChoiceText { get; set; }
         public string? ChoiceImageUrl { get; set; }

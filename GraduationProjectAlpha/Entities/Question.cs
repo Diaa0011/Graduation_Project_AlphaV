@@ -1,9 +1,11 @@
 ﻿using GraduationProjectAlpha.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Entities
 {
     public class Question
     {
+        [Key]
         public int QuestionId { get; set; }
         public QuestionCategory QuestionCategory { get; set; }
         public string? ImageUrl { get; set; }

@@ -1,7 +1,10 @@
-﻿namespace GraduationProjectAlpha.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GraduationProjectAlpha.Entities
 {
     public class Lesson
     {
+        [Key]
         public int LessonId { get; set; }
         public string Name { get; set; }
         public string VideoUrl { get; set; }

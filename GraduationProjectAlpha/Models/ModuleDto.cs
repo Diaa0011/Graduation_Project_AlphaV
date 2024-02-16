@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraduationProjectAlpha.Models;
+using System;
 
 public class ModuleDto
 {

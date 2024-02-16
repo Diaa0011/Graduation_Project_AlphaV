@@ -1,9 +1,11 @@
 ﻿using GraduationProjectAlpha.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Entities
 {
     public class CourseEnrollment
     {
+        [Key]
         public int CourseEnrollmentId { get; set; }
         public DateTime EnrolmentDate { get; set; }
         public Rating? Rating { get; set; }

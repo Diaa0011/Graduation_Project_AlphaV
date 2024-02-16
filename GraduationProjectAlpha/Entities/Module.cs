@@ -1,7 +1,10 @@
-﻿namespace GraduationProjectAlpha.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GraduationProjectAlpha.Entities
 {
     public class Module
     {
+        [Key]
         public int ModuleId { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
