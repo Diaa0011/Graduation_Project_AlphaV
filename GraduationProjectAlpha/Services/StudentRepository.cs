@@ -1,5 +1,5 @@
 ﻿using GraduationProjectAlpha.DbContexts;
-using GraduationProjectAlpha.Entities;
+using GraduationProjectAlpha.Model;
 using GraduationProjectAlpha.Services.IRepository;
 using Microsoft.EntityFrameworkCore;
 

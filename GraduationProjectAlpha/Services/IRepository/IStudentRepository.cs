@@ -1,4 +1,4 @@
-﻿using GraduationProjectAlpha.Entities;
+﻿using GraduationProjectAlpha.Model;
 using System.Collections.ObjectModel;
 
 namespace GraduationProjectAlpha.Services.IRepository

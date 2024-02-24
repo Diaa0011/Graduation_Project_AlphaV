@@ -1,9 +1,12 @@
-﻿using GraduationProjectAlpha.Entities;
+﻿using GraduationProjectAlpha.Models.Enums;
+using GraduationProjectAlpha.Model;
+using GraduationProjectAlpha.Models.Enums;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GraduationProjectAlpha.DbContexts
 {
-    public class ApplicationDbContext:DbContext
+    public class ApplicationDbContext:IdentityDbContext 
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -24,9 +27,10 @@ namespace GraduationProjectAlpha.DbContexts
                     LName = "Mahmoud",
                     PhoneNumber = "1234567890",
                     Email="AhmedMahmoud@Mail.com",
-                    Sex = Models.Enums.Sex.Male,
+                    Password="123456@Mail",
+                    Sex = Sex.Male,
                     DateOfBirth = new DateTime(2001, 02, 14),
-                    Level = Models.Enums.Level.ThirdSecondary,
+                    Level = Level.ThirdSecondary,
 
                 }
                 );

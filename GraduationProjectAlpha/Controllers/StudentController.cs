@@ -1,4 +1,5 @@
-﻿using GraduationProjectAlpha.Services.IRepository;
+﻿using GraduationProjectAlpha.Model;
+using GraduationProjectAlpha.Services.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraduationProjectAlpha.Controllers
@@ -24,11 +25,13 @@ namespace GraduationProjectAlpha.Controllers
             var student = await _unitOfWork.Student.GetStudentAsync(id);
             return Ok(student);
         }
-        
-        //public async Task AddStudent(Student student)
-        //{
-        //    _unitOfWork.Student.Add(student);
+        [HttpPost]
+        public async Task<ActionResult<Student>> AddStudent(Student student)
+        {
+            await _unitOfWork.Student.AddStudent(student);
+            _unitOfWork.Save();
+            return CreatedAtRoute("GetStudent",new Student());
 
-        //}
+        }
     }
 }
