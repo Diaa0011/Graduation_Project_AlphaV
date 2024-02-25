@@ -1,6 +1,10 @@
-﻿using GraduationProjectAlpha.Model;
+﻿using AutoMapper;
+using GraduationProjectAlpha.Dtos.Student;
+using GraduationProjectAlpha.Model;
 using GraduationProjectAlpha.Services.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SQLitePCL;
 
 namespace GraduationProjectAlpha.Controllers
 {
@@ -9,14 +13,17 @@ namespace GraduationProjectAlpha.Controllers
     public class StudentController:ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public StudentController(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public StudentController(IUnitOfWork unitOfWork,IMapper mapper)
         {
                 _unitOfWork = unitOfWork;
+                _mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet,Authorize]
         public async Task<IActionResult> GetAllStudents()
         {
-            var students = await _unitOfWork.Student.GetStudentsAsync();
+            var studentsCatch = await _unitOfWork.Student.GetStudentsAsync();
+            var students = _mapper.Map<IEnumerable<StudentReadDto>>(studentsCatch);
             return Ok(students);
         }
         [HttpGet("id")]

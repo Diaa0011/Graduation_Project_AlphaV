@@ -31,7 +31,7 @@ namespace GraduationProjectAlpha.Services
         }
         public async Task AddStudent(Student student)
         {
-            _db.AddAsync(student);
+            _db.Students.AddAsync(student);
         }
     }
 }

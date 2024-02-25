@@ -1,17 +1,21 @@
 ﻿using GraduationProjectAlpha.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
-namespace GraduationProjectAlpha.Model
+namespace GraduationProjectAlpha.Dtos.Student
 {
-    public class User
+    public class StudentCreateDto
     {
-        public string Email { get; set; }
-        public string Password { get;set; }
+        [Required]
         public string FName { get; set; }
+        [Required]
         public string LName { get; set; }
+        [Required]
         public string PhoneNumber { get; set; }
+        [Required]
+        public string Email { get; set; }
+        public string Password { get; set; }
         public Sex Sex { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Level Level { get; set; }
-
     }
 }
