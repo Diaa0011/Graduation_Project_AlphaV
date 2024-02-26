@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProjectAlpha.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240216193502_reconstruct")]
-    partial class reconstruct
+    [Migration("20240223152052_RemovingEmailFromStudent")]
+    partial class RemovingEmailFromStudent
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -377,10 +377,6 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -399,22 +395,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("Sex")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("StudentId");
 
-                    b.ToTable("Students");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            StudentId = 1,
-                            DateOfBirth = new DateTime(2001, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "AhmedMahmoud@Mail.com",
-                            FName = "Ahmed",
-                            LName = "Mahmoud",
-                            Level = 12,
-                            PhoneNumber = "1234567890",
-                            Sex = 0
-                        });
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentAssessmentInteraction", b =>
@@ -496,6 +485,35 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("StudentQuestionInteraction");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("GraduationProjectAlpha.Entities.Assessment", b =>
@@ -648,6 +666,17 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Student", b =>
+                {
+                    b.HasOne("GraduationProjectAlpha.Entities.User", "User")
+                        .WithOne("Student")
+                        .HasForeignKey("GraduationProjectAlpha.Entities.Student", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentAssessmentInteraction", b =>
                 {
                     b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
@@ -769,6 +798,12 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("StudentLessonInteractions");
 
                     b.Navigation("StudentQuestionInteractions");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.User", b =>
+                {
+                    b.Navigation("Student")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

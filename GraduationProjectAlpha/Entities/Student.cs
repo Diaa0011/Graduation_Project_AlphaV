@@ -13,7 +13,6 @@ namespace GraduationProjectAlpha.Entities
         public string FName { get; set; }
         public string LName { get; set; }
         public string PhoneNumber { get; set; }
-        public string Email { get; set; }
         public Sex Sex { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Level Level { get; set; }
@@ -23,6 +22,8 @@ namespace GraduationProjectAlpha.Entities
         public List<StudentAssessmentInteraction>? StudentAssessmentInteractions { get; set; }
         public List<Comment>? Comments { get; set; }
         public List<CommentVote>? CommentVotes { get; set; }
-        
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

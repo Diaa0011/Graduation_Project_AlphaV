@@ -1,7 +1,7 @@
 ﻿using GraduationProjectAlpha.Entities;
 using System.Collections.ObjectModel;
 
-namespace GraduationProjectAlpha.Services.IRepository
+namespace GraduationProjectAlpha.Services.Repository.IRepository
 {
     public interface IStudentRepository
     {

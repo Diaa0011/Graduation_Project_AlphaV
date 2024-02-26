@@ -1,4 +1,4 @@
-﻿using GraduationProjectAlpha.Services.IRepository;
+﻿using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraduationProjectAlpha.Controllers

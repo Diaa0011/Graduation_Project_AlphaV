@@ -1,7 +1,8 @@
 using GraduationProjectAlpha.DbContexts;
-using GraduationProjectAlpha.Services.IRepository;
-using GraduationProjectAlpha.Services;
 using Microsoft.EntityFrameworkCore;
+using GraduationProjectAlpha.Services.Repository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
+using GraduationProjectAlpha.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 var app = builder.Build();
