@@ -1,6 +1,7 @@
 ﻿using GraduationProjectAlpha.DbContexts;
 using GraduationProjectAlpha.Entities;
 using GraduationProjectAlpha.Services.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraduationProjectAlpha.Services.Repository
 {
@@ -13,9 +14,15 @@ namespace GraduationProjectAlpha.Services.Repository
             _dbContext = dbContext;
         }
 
-        public async Task AddUser(User user)
+        public async Task AddUserAsync(User user)
         {
             await _dbContext.Users.AddAsync(user);
+        }
+
+        public async Task<User> FindUserByEmailAsync(string email)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+            
         }
     }
 }

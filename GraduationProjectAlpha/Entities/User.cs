@@ -8,10 +8,23 @@ namespace GraduationProjectAlpha.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(50)]
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(100)] // Adjust the maximum length as needed
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
         public byte[] PasswordHash { get; set; }
+
+        [Required]
         public byte[] PasswordSalt { get; set; }
+
+        // Navigation property
         public Student Student { get; set; }
     }
 }

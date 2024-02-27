@@ -29,7 +29,7 @@ namespace GraduationProjectAlpha.Services.Repository
                 return await student;
             }
         }
-        public async Task AddStudent(Student student)
+        public async Task AddStudentAsync(Student student)
         {
             await _dbContext.Students.AddAsync(student);
             await _dbContext.SaveChangesAsync();

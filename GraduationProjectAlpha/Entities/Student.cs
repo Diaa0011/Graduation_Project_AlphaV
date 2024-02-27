@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GraduationProjectAlpha.Entities
 {
@@ -10,11 +11,27 @@ namespace GraduationProjectAlpha.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StudentId { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string FName { get; set; }
+
+        [Required]
+        [StringLength(50)] // Adjust the maximum length as needed
         public string LName { get; set; }
+
+        [Required]
+        [MinLength(11)]
+        [MaxLength(11)]
         public string PhoneNumber { get; set; }
+
+        [Required]
         public Sex Sex { get; set; }
+
+        [Required]
         public DateTime DateOfBirth { get; set; }
+
+        [Required]
         public Level Level { get; set; }
         public List<CourseEnrollment>? CourseEnrollments { get; set; }
         public List<StudentLessonInteraction>? StudentLessonInteractions { get; set; }

@@ -4,6 +4,7 @@ namespace GraduationProjectAlpha.Services.Repository.IRepository
 {
     public interface IUserRepository
     {
-        Task AddUser(User user);
+        Task AddUserAsync(User user);
+        Task<User> FindUserByEmailAsync(string email);
     }
 }

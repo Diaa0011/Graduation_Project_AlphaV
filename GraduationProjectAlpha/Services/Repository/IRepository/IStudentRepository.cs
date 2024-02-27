@@ -7,7 +7,7 @@ namespace GraduationProjectAlpha.Services.Repository.IRepository
     {
         Task<Student> GetStudentAsync(int studentId);
         Task<IEnumerable<Student>> GetStudentsAsync();
-        Task AddStudent(Student student);
+        Task AddStudentAsync(Student student);
 
 
     }
