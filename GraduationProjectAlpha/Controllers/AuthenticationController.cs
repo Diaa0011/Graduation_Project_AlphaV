@@ -131,10 +131,14 @@ namespace GraduationProjectAlpha.Controllers
             {
                 return BadRequest("You haven't enter the email or password");
             }
+            if (!_emailCheckerService.IsEmailValid(userLoginDto.Email))
+            {
+                return BadRequest("Invalid Email");
+            }
             var user = await _unitOfWork.User.FindUserByEmailAsync(userLoginDto.Email);
             if(user == null)
             {
-                return BadRequest("Invaild Email");
+                return BadRequest("Email doesn't Exist");
             }
             if (!_passwordHasher.VerifyPasswordHash(userLoginDto.Password, user.PasswordHash, user.PasswordSalt))
             {

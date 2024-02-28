@@ -7,9 +7,11 @@ namespace GraduationProjectAlpha.Models
     {
         [EmailAddress]
         [Required]
+        [StringLength(100)]
         public string Email { get; set; }
         [Required]
         [PasswordPropertyText]
+        [MinLength(8)]
         public string Password { get; set; }
     }
 }
