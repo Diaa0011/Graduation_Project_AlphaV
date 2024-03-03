@@ -2,12 +2,11 @@
 {
     public enum CourseCategory
     {
-        Histroy,
         Biology,
-        Arabic,
         English,
+        Histroy,
+        Arabic,
         French,
         Math,
-
     }
 }

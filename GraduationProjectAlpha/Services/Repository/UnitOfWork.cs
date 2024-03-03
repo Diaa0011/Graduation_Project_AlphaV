@@ -8,12 +8,16 @@ namespace GraduationProjectAlpha.Services.Repository
         private readonly ApplicationDbContext _dbContext;
         public IStudentRepository Student { get; }
         public IUserRepository User { get; }
+        public ICourseRepository Course { get; }
+
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
             Student = new StudentRepository(_dbContext);
             User = new UserRepository(_dbContext);
+            Course = new CourseRepository(_dbContext);
         }
+
         public async Task SaveAsync()
         {
             await _dbContext.SaveChangesAsync();

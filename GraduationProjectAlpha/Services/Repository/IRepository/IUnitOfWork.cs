@@ -4,6 +4,7 @@
     {
         IStudentRepository Student { get; }
         IUserRepository User { get; }
+        ICourseRepository Course { get; }
         Task SaveAsync();
     }
 }
