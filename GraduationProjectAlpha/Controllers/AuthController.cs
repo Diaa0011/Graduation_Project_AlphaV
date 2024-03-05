@@ -67,7 +67,7 @@ namespace GraduationProjectAlpha.Controllers
 
             var studentToBeAdd = _mapper.Map<Student>(student);
 
-            _unitOfWork.Student.AddStudent(studentToBeAdd);
+            _unitOfWork.Students.AddAsync(studentToBeAdd);
 
             _unitOfWork.Save();
 

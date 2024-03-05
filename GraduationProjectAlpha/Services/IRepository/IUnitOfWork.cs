@@ -1,8 +1,8 @@
 ﻿namespace GraduationProjectAlpha.Services.IRepository
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork:IDisposable
     {
-        IStudentRepository Student { get; }
+        IStudentRepository Students { get; }
         void Save();
     }
 }

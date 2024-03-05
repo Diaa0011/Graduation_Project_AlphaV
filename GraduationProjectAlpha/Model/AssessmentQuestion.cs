@@ -2,10 +2,8 @@
 
 namespace GraduationProjectAlpha.Model
 {
-    public class AssessmentQuestion
+    public class AssessmentQuestion: BaseEntity
     {
-        [Key]
-        public int AssessmentQuestionId { get; set; }
         public int Grade { get; set; }
         public int Order { get; set; }
         public Question Question { get; set; }

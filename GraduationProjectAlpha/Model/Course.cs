@@ -1,12 +1,11 @@
-﻿using GraduationProjectAlpha.Models.Enums;
+﻿using GraduationProjectAlpha.Model.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Model
 {
-    public class Course
+    public class Course: BaseEntity
     {
-        [Key]
-        public int CourseId { get; set; }
+       
         public string Name { get; set; }
         public string Description { get; set; }
         public CourseCategory Category { get; set; }

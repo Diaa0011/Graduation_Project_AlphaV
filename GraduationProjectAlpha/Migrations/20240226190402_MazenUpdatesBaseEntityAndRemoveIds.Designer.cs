@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProjectAlpha.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240223145304_Restart")]
-    partial class Restart
+    [Migration("20240226190402_MazenUpdatesBaseEntityAndRemoveIds")]
+    partial class MazenUpdatesBaseEntityAndRemoveIds
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,19 +25,36 @@ namespace GraduationProjectAlpha.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Assessment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Assessment", b =>
                 {
-                    b.Property<int>("AssessmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssessmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AssessmentType")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Grade")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModuleId")
                         .HasColumnType("int");
@@ -46,28 +63,45 @@ namespace GraduationProjectAlpha.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AssessmentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ModuleId");
 
                     b.ToTable("Assessment");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.AssessmentLessonLinking", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.AssessmentLessonLinking", b =>
                 {
-                    b.Property<int>("AssessmentLessonLinkingId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssessmentLessonLinkingId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AssessmentId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
-                    b.HasKey("AssessmentLessonLinkingId");
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AssessmentId");
 
@@ -76,19 +110,36 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("AssessmentLessonLinking");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.AssessmentQuestion", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.AssessmentQuestion", b =>
                 {
-                    b.Property<int>("AssessmentQuestionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssessmentQuestionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AssessmentId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Grade")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
@@ -96,7 +147,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("AssessmentQuestionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AssessmentId");
 
@@ -105,18 +156,35 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("AssessmentQuestion");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Choice", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Choice", b =>
                 {
-                    b.Property<int>("ChoiceId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChoiceId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ChoiceImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ChoiceText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
@@ -125,32 +193,49 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("ChoiceId");
+                    b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Choice");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Comment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Comment", b =>
                 {
-                    b.Property<int>("CommentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CommentText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.HasKey("CommentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("LessonId");
 
@@ -159,16 +244,33 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.CommentVote", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.CommentVote", b =>
                 {
-                    b.Property<int>("CommentVoteId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentVoteId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CommentId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -176,7 +278,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("VoteType")
                         .HasColumnType("int");
 
-                    b.HasKey("CommentVoteId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CommentId");
 
@@ -185,16 +287,23 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("CommentVote");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Course", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Course", b =>
                 {
-                    b.Property<int>("CourseId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -203,28 +312,55 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CourseId");
+                    b.HasKey("Id");
 
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.CourseEnrollment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.CourseEnrollment", b =>
                 {
-                    b.Property<int>("CourseEnrollmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseEnrollmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EnrolmentDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Rating")
                         .HasColumnType("int");
@@ -232,7 +368,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.HasKey("CourseEnrollmentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
@@ -241,13 +377,20 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("CourseEnrollment");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Lesson", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Lesson", b =>
                 {
-                    b.Property<int>("LessonId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LessonId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -255,6 +398,16 @@ namespace GraduationProjectAlpha.Migrations
 
                     b.Property<int>("DurationInSeconds")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModuleId")
                         .HasColumnType("int");
@@ -274,23 +427,40 @@ namespace GraduationProjectAlpha.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LessonId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ModuleId");
 
                     b.ToTable("Lesson");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Module", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Module", b =>
                 {
-                    b.Property<int>("ModuleId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModuleId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -302,22 +472,39 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
 
-                    b.HasKey("ModuleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("SectionId");
 
                     b.ToTable("Module");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Question", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Question", b =>
                 {
-                    b.Property<int>("QuestionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuestionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionCategory")
@@ -333,24 +520,41 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("RightChoiceIndex")
                         .HasColumnType("int");
 
-                    b.HasKey("QuestionId");
+                    b.HasKey("Id");
 
                     b.ToTable("Question");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Section", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Section", b =>
                 {
-                    b.Property<int>("SectionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SectionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -359,20 +563,27 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.HasKey("SectionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
                     b.ToTable("Section");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Student", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Student", b =>
                 {
-                    b.Property<int>("StudentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -385,6 +596,9 @@ namespace GraduationProjectAlpha.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -392,7 +606,10 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.Property<string>("Password")
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -403,35 +620,55 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("Sex")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentId");
+                    b.HasKey("Id");
 
                     b.ToTable("Students");
 
                     b.HasData(
                         new
                         {
-                            StudentId = 1,
+                            Id = 1,
+                            CreatedAt = new DateTime(2024, 2, 26, 19, 3, 59, 462, DateTimeKind.Utc).AddTicks(2975),
+                            CreatedBy = "Admin",
                             DateOfBirth = new DateTime(2001, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "AhmedMahmoud@Mail.com",
                             FName = "Ahmed",
+                            IsDeleted = false,
                             LName = "Mahmoud",
                             Level = 12,
-                            Password = "123456@Mail",
+                            ModifiedBy = "Admin",
                             PhoneNumber = "1234567890",
                             Sex = 0
                         });
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentAssessmentInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentAssessmentInteraction", b =>
                 {
-                    b.Property<int>("StudentAssessmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentAssessmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AssessmentId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OverallGrade")
                         .HasColumnType("int");
@@ -439,7 +676,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentAssessmentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AssessmentId");
 
@@ -448,16 +685,33 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("StudentAssessmentInteraction");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentLessonInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentLessonInteraction", b =>
                 {
-                    b.Property<int>("StudentLessonId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentLessonId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -465,7 +719,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("WatchingTimeInSeconds")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentLessonId");
+                    b.HasKey("Id");
 
                     b.HasIndex("LessonId");
 
@@ -474,13 +728,30 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("StudentLessonInteraction");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentQuestionInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentQuestionInteraction", b =>
                 {
-                    b.Property<int>("StudentQuestionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentQuestionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
@@ -494,7 +765,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentQuestionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
 
@@ -503,211 +774,9 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("StudentQuestionInteraction");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Assessment", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Assessment", b =>
-                {
-                    b.HasOne("GraduationProjectAlpha.Model.Module", "Module")
+                    b.HasOne("GraduationProjectAlpha.Entities.Module", "Module")
                         .WithMany("Assessments")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -716,15 +785,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.AssessmentLessonLinking", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.AssessmentLessonLinking", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Assessment", "Assessment")
+                    b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
                         .WithMany("AssessmentLessonLinkings")
                         .HasForeignKey("AssessmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Model.Lesson", "Lesson")
+                    b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
                         .WithMany("AssessmentLessonLinkings")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -735,15 +804,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Lesson");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.AssessmentQuestion", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.AssessmentQuestion", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Assessment", "Assessment")
+                    b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
                         .WithMany("AssessmentQuestions")
                         .HasForeignKey("AssessmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Model.Question", "Question")
+                    b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
                         .WithMany("AssessmentQuestions")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -754,9 +823,9 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Choice", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Choice", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Question", "Question")
+                    b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
                         .WithMany("Choices")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -765,15 +834,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Comment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Comment", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Lesson", "Lesson")
+                    b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
                         .WithMany("Comments")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("Comments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -784,15 +853,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.CommentVote", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.CommentVote", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Comment", "Comment")
+                    b.HasOne("GraduationProjectAlpha.Entities.Comment", "Comment")
                         .WithMany("CommentVotes")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("CommentVotes")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -803,15 +872,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.CourseEnrollment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.CourseEnrollment", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Course", "Course")
+                    b.HasOne("GraduationProjectAlpha.Entities.Course", "Course")
                         .WithMany("CourseEnrollments")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("CourseEnrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -822,9 +891,9 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Lesson", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Lesson", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Module", "Module")
+                    b.HasOne("GraduationProjectAlpha.Entities.Module", "Module")
                         .WithMany("Lessons")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -833,9 +902,9 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Module", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Module", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Section", "Section")
+                    b.HasOne("GraduationProjectAlpha.Entities.Section", "Section")
                         .WithMany("Modules")
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -844,9 +913,9 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Section");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Section", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Section", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Course", "Course")
+                    b.HasOne("GraduationProjectAlpha.Entities.Course", "Course")
                         .WithMany("Sections")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -855,15 +924,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentAssessmentInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentAssessmentInteraction", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Assessment", "Assessment")
+                    b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
                         .WithMany("StudentAssessmentInteractions")
                         .HasForeignKey("AssessmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("StudentAssessmentInteractions")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -874,15 +943,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentLessonInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentLessonInteraction", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Lesson", "Lesson")
+                    b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
                         .WithMany("StudentLessonInteractions")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("StudentLessonInteractions")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -893,15 +962,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentQuestionInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentQuestionInteraction", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Question", "Question")
+                    b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
                         .WithMany("StudentQuestionInteractions")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
                         .WithMany("StudentQuestionInteractions")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -912,58 +981,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Assessment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Assessment", b =>
                 {
                     b.Navigation("AssessmentLessonLinkings");
 
@@ -972,19 +990,19 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("StudentAssessmentInteractions");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Comment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Comment", b =>
                 {
                     b.Navigation("CommentVotes");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Course", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Course", b =>
                 {
                     b.Navigation("CourseEnrollments");
 
                     b.Navigation("Sections");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Lesson", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Lesson", b =>
                 {
                     b.Navigation("AssessmentLessonLinkings");
 
@@ -993,14 +1011,14 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("StudentLessonInteractions");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Module", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Module", b =>
                 {
                     b.Navigation("Assessments");
 
                     b.Navigation("Lessons");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Question", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Question", b =>
                 {
                     b.Navigation("AssessmentQuestions");
 
@@ -1009,12 +1027,12 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("StudentQuestionInteractions");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Section", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Section", b =>
                 {
                     b.Navigation("Modules");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Model.Student", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Entities.Student", b =>
                 {
                     b.Navigation("CommentVotes");
 

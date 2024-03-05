@@ -1,4 +1,4 @@
-﻿using GraduationProjectAlpha.Models.Enums;
+﻿using GraduationProjectAlpha.Model.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -6,12 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProjectAlpha.Model
 {
-    public class Student
-
+    public class Student: BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StudentId { get; set; }
+    //    [Key]
+    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    //    public int StudentId { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
         public string PhoneNumber { get; set; }

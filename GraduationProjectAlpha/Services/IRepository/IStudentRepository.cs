@@ -3,12 +3,8 @@ using System.Collections.ObjectModel;
 
 namespace GraduationProjectAlpha.Services.IRepository
 {
-    public interface IStudentRepository
+    public interface IStudentRepository:IBaseRepository<Student>
     {
-        Task<Student> GetStudentAsync(int studentId);
-        Task<IEnumerable<Student>> GetStudentsAsync();
-        Task AddStudent(Student student);
-
 
     }
 }

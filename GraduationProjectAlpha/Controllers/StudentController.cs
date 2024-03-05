@@ -4,7 +4,6 @@ using GraduationProjectAlpha.Model;
 using GraduationProjectAlpha.Services.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SQLitePCL;
 
 namespace GraduationProjectAlpha.Controllers
 {
@@ -22,23 +21,24 @@ namespace GraduationProjectAlpha.Controllers
         [HttpGet,Authorize]
         public async Task<IActionResult> GetAllStudents()
         {
-            var studentsCatch = await _unitOfWork.Student.GetStudentsAsync();
+            var studentsCatch = await _unitOfWork.Students.GetAllAsync();
             var students = _mapper.Map<IEnumerable<StudentReadDto>>(studentsCatch);
             return Ok(students);
         }
         [HttpGet("id")]
         public async Task<IActionResult> GetStudent(int id)
         {
-            var student = await _unitOfWork.Student.GetStudentAsync(id);
+            var student = await _unitOfWork.Students.GetByIdAsync(id);
             return Ok(student);
         }
         [HttpPost]
         public async Task<ActionResult<Student>> AddStudent(Student student)
         {
-            await _unitOfWork.Student.AddStudent(student);
+            await _unitOfWork.Students.AddAsync(student);
             _unitOfWork.Save();
             return CreatedAtRoute("GetStudent",new Student());
 
         }
     }
 }
+

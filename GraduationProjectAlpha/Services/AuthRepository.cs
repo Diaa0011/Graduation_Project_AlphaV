@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using GraduationProjectAlpha.Dtos.Student;
-using GraduationProjectAlpha.Dtos.User;
+﻿using GraduationProjectAlpha.Dtos.User;
 using GraduationProjectAlpha.Model;
-using GraduationProjectAlpha.Models.Enums;
 using GraduationProjectAlpha.Services.IRepository;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

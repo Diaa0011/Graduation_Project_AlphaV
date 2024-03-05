@@ -1,4 +1,4 @@
-﻿namespace GraduationProjectAlpha.Models.Enums
+﻿namespace GraduationProjectAlpha.Model.Enums
 {
     public enum QuestionType
     {

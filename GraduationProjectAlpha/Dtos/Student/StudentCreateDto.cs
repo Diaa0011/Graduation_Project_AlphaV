@@ -1,4 +1,4 @@
-﻿using GraduationProjectAlpha.Models.Enums;
+﻿using GraduationProjectAlpha.Model.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Dtos.Student

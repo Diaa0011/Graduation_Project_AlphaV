@@ -1,12 +1,11 @@
-﻿using GraduationProjectAlpha.Models.Enums;
+﻿using GraduationProjectAlpha.Model.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Model
 {
-    public class Question
+    public class Question: BaseEntity
     {
-        [Key]
-        public int QuestionId { get; set; }
+
         public QuestionCategory QuestionCategory { get; set; }
         public string? ImageUrl { get; set; }
         public string QuestionText { get; set; }

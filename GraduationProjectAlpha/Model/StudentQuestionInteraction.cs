@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using GraduationProjectAlpha.Models.Enums;
+using GraduationProjectAlpha.Model.Enums;
 
 namespace GraduationProjectAlpha.Model
 {
-    public class StudentQuestionInteraction
+    public class StudentQuestionInteraction: BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StudentQuestionId { get; set; }
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int StudentQuestionId { get; set; }
         public int? StudentChoiceIndex { get; set; }
         public StudentChoiceStatus StudentChoiceStatus { get; set; }
         public Question Question { get; set; }

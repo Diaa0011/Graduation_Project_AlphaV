@@ -1,4 +1,4 @@
-﻿using GraduationProjectAlpha.Models.Enums;
+﻿using GraduationProjectAlpha.Model.Enums;
 
 namespace GraduationProjectAlpha.Model
 {

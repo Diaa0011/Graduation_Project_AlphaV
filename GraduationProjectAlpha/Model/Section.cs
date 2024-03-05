@@ -2,10 +2,9 @@
 
 namespace GraduationProjectAlpha.Model
 {
-    public class Section
+    public class Section: BaseEntity
     {
-        [Key]
-        public int SectionId { get; set; }
+
         public int Order { get; set; }
         public string Name { get; set; }
         public int DurationInMinutes { get; set; }
