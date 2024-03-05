@@ -2,10 +2,9 @@
 
 namespace GraduationProjectAlpha.Entities
 {
-    public class AssessmentLessonLinking
+    public class AssessmentLessonLinking: BaseEntity
     {
-        [Key]
-        public int AssessmentLessonLinkingId { get; set; }
+     
         public Assessment Assessment { get; set; }
         public Lesson Lesson { get; set; }
     }

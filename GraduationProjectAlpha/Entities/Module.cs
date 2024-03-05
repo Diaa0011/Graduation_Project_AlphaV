@@ -2,10 +2,9 @@
 
 namespace GraduationProjectAlpha.Entities
 {
-    public class Module
+    public class Module:BaseEntity
     {
-        [Key]
-        public int ModuleId { get; set; }
+
         public int Order { get; set; }
         public string Name { get; set; }
         public int DurationInMinutes { get; set; }

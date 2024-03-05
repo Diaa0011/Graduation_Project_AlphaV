@@ -3,10 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Entities
 {
-    public class Question
+    public class Question: BaseEntity
     {
-        [Key]
-        public int QuestionId { get; set; }
+
         public QuestionCategory QuestionCategory { get; set; }
         public string? ImageUrl { get; set; }
         public string QuestionText { get; set; }

@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProjectAlpha.Entities
 {
-    public class Student
+    public class Student: BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StudentId { get; set; }
+    //    [Key]
+    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    //    public int StudentId { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
         public string PhoneNumber { get; set; }

@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Entities
 {
-    public class Assessment
+    public class Assessment: BaseEntity
     {
-        [Key]
-        public int AssessmentId { get; set; }
         public AssessmentType AssessmentType { get; set; }
         public List<AssessmentLessonLinking>? AssessmentLessonLinkings { get; set; }
         public string Title { get; set; }

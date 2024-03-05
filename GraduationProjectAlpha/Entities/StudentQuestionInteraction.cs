@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GraduationProjectAlpha.Entities
 {
-    public class StudentQuestionInteraction
+    public class StudentQuestionInteraction: BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StudentQuestionId { get; set; }
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int StudentQuestionId { get; set; }
         public int? StudentChoiceIndex { get; set; }
         public StudentChoiceStatus StudentChoiceStatus { get; set; }
         public Question Question { get; set; }

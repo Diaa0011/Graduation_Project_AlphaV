@@ -2,10 +2,9 @@
 
 namespace GraduationProjectAlpha.Entities
 {
-    public class Choice
+    public class Choice: BaseEntity
     {
-        [Key]
-        public int ChoiceId { get; set; }
+       
         public string? ChoiceText { get; set; }
         public string? ChoiceImageUrl { get; set; }
         public int Order { get; set; }

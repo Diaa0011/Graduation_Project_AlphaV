@@ -2,10 +2,9 @@
 
 namespace GraduationProjectAlpha.Entities
 {
-    public class Lesson
+    public class Lesson: BaseEntity
     {
-        [Key]
-        public int LessonId { get; set; }
+       
         public string Name { get; set; }
         public string VideoUrl { get; set; }
         public string PdfUrl { get; set; }

@@ -1,7 +1,7 @@
 using GraduationProjectAlpha.DbContexts;
 using GraduationProjectAlpha.Services.IRepository;
-using GraduationProjectAlpha.Services;
 using Microsoft.EntityFrameworkCore;
+using GraduationProjectAlpha.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

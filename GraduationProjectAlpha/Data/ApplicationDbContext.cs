@@ -6,8 +6,7 @@ namespace GraduationProjectAlpha.DbContexts
     public class ApplicationDbContext:DbContext
     {
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            :base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :base(options)
         {        
             
         }
@@ -19,7 +18,7 @@ namespace GraduationProjectAlpha.DbContexts
             modelBuilder.Entity<Student>().HasData(
                 new Student
                 {
-                    StudentId = 1,
+                    Id = 1,
                     FName = "Ahmed",
                     LName = "Mahmoud",
                     PhoneNumber = "1234567890",
