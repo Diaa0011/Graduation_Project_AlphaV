@@ -26,8 +26,12 @@ namespace GraduationProjectAlpha.Controllers
             _mapper = mapper;
         }
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser(User user)
+        public async Task<IActionResult> RegisterUser(CreateUserDto user)
         {
+            if (user == null)
+            {
+
+            }
             if (await _authRepository.Register(user))
             {
                 StudentUserLinking(user);
@@ -62,12 +66,14 @@ namespace GraduationProjectAlpha.Controllers
                 PhoneNumber = user.PhoneNumber,
                 Sex = user.Sex,
                 DateOfBirth = user.DateOfBirth,
-                Level = user.Level
+                Level = user.Level,
+                UserId = user.Id
+                
             };
 
             var studentToBeAdd = _mapper.Map<Student>(student);
 
-            _unitOfWork.Student.AddStudent(studentToBeAdd);
+            _unitOfWork.Student.AddAsync(studentToBeAdd);
 
             _unitOfWork.Save();
 

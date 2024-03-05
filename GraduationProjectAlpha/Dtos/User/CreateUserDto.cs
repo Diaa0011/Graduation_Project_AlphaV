@@ -1,15 +1,11 @@
 ﻿using GraduationProjectAlpha.Models.Enums;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GraduationProjectAlpha.Model
+namespace GraduationProjectAlpha.Dtos.User
 {
-    public class User
+    public class CreateUserDto
     {
-        [Key]
-        public int Id { get; set; }
         public string Email { get; set; }
-        public string Password { get;set; }
+        public string Password { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
         public string PhoneNumber { get; set; }

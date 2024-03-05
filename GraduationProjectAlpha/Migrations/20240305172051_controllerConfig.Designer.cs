@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProjectAlpha.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240223145304_Restart")]
-    partial class Restart
+    [Migration("20240305172051_controllerConfig")]
+    partial class controllerConfig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -403,23 +403,14 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("Sex")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("StudentId");
 
-                    b.ToTable("Students");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            StudentId = 1,
-                            DateOfBirth = new DateTime(2001, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "AhmedMahmoud@Mail.com",
-                            FName = "Ahmed",
-                            LName = "Mahmoud",
-                            Level = 12,
-                            Password = "123456@Mail",
-                            PhoneNumber = "1234567890",
-                            Sex = 0
-                        });
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("GraduationProjectAlpha.Model.StudentAssessmentInteraction", b =>
@@ -501,6 +492,48 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("StudentQuestionInteraction");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Sex")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -648,12 +681,10 @@ namespace GraduationProjectAlpha.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -690,12 +721,10 @@ namespace GraduationProjectAlpha.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -853,6 +882,16 @@ namespace GraduationProjectAlpha.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Student", b =>
+                {
+                    b.HasOne("GraduationProjectAlpha.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GraduationProjectAlpha.Model.StudentAssessmentInteraction", b =>

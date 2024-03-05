@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProjectAlpha.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240224203629_UserAddition")]
-    partial class UserAddition
+    [Migration("20240305170706_refactorServicesToBeSolid")]
+    partial class refactorServicesToBeSolid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -403,7 +403,12 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("Sex")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("StudentId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Students");
 
@@ -501,6 +506,53 @@ namespace GraduationProjectAlpha.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("StudentQuestionInteraction");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Sex")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -851,6 +903,16 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Student", b =>
+                {
+                    b.HasOne("GraduationProjectAlpha.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("GraduationProjectAlpha.Model.StudentAssessmentInteraction", b =>
                 {
                     b.HasOne("GraduationProjectAlpha.Model.Assessment", "Assessment")
@@ -904,6 +966,16 @@ namespace GraduationProjectAlpha.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.User", b =>
+                {
+                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Student");
                 });

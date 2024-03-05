@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GraduationProjectAlpha.Migrations
 {
     /// <inheritdoc />
-    public partial class Restart : Migration
+    public partial class refactorServicesToBeSolid : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -84,26 +84,6 @@ namespace GraduationProjectAlpha.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
-                columns: table => new
-                {
-                    StudentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sex = table.Column<int>(type: "int", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Students", x => x.StudentId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -149,8 +129,8 @@ namespace GraduationProjectAlpha.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -194,8 +174,8 @@ namespace GraduationProjectAlpha.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -250,62 +230,6 @@ namespace GraduationProjectAlpha.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Question",
                         principalColumn: "QuestionId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CourseEnrollment",
-                columns: table => new
-                {
-                    CourseEnrollmentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EnrolmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: true),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CourseEnrollment", x => x.CourseEnrollmentId);
-                    table.ForeignKey(
-                        name: "FK_CourseEnrollment_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "CourseId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CourseEnrollment_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StudentQuestionInteraction",
-                columns: table => new
-                {
-                    StudentQuestionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentChoiceIndex = table.Column<int>(type: "int", nullable: true),
-                    StudentChoiceStatus = table.Column<int>(type: "int", nullable: false),
-                    QuestionId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentQuestionInteraction", x => x.StudentQuestionId);
-                    table.ForeignKey(
-                        name: "FK_StudentQuestionInteraction_Question_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Question",
-                        principalColumn: "QuestionId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_StudentQuestionInteraction_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -407,33 +331,6 @@ namespace GraduationProjectAlpha.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentAssessmentInteraction",
-                columns: table => new
-                {
-                    StudentAssessmentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OverallGrade = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    AssessmentId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentAssessmentInteraction", x => x.StudentAssessmentId);
-                    table.ForeignKey(
-                        name: "FK_StudentAssessmentInteraction_Assessment_AssessmentId",
-                        column: x => x.AssessmentId,
-                        principalTable: "Assessment",
-                        principalColumn: "AssessmentId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_StudentAssessmentInteraction_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AssessmentLessonLinking",
                 columns: table => new
                 {
@@ -478,11 +375,69 @@ namespace GraduationProjectAlpha.Migrations
                         principalTable: "Lesson",
                         principalColumn: "LessonId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CommentVote",
+                columns: table => new
+                {
+                    CommentVoteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VoteType = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentVote", x => x.CommentVoteId);
                     table.ForeignKey(
-                        name: "FK_Comment_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId",
+                        name: "FK_CommentVote_Comment_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comment",
+                        principalColumn: "CommentId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseEnrollment",
+                columns: table => new
+                {
+                    CourseEnrollmentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EnrolmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: true),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseEnrollment", x => x.CourseEnrollmentId);
+                    table.ForeignKey(
+                        name: "FK_CourseEnrollment_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "CourseId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentAssessmentInteraction",
+                columns: table => new
+                {
+                    StudentAssessmentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OverallGrade = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    AssessmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentAssessmentInteraction", x => x.StudentAssessmentId);
+                    table.ForeignKey(
+                        name: "FK_StudentAssessmentInteraction_Assessment_AssessmentId",
+                        column: x => x.AssessmentId,
+                        principalTable: "Assessment",
+                        principalColumn: "AssessmentId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -505,35 +460,72 @@ namespace GraduationProjectAlpha.Migrations
                         principalTable: "Lesson",
                         principalColumn: "LessonId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentQuestionInteraction",
+                columns: table => new
+                {
+                    StudentQuestionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentChoiceIndex = table.Column<int>(type: "int", nullable: true),
+                    StudentChoiceStatus = table.Column<int>(type: "int", nullable: false),
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentQuestionInteraction", x => x.StudentQuestionId);
                     table.ForeignKey(
-                        name: "FK_StudentLessonInteraction_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId",
+                        name: "FK_StudentQuestionInteraction_Question_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Question",
+                        principalColumn: "QuestionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CommentVote",
+                name: "Students",
                 columns: table => new
                 {
-                    CommentVoteId = table.Column<int>(type: "int", nullable: false)
+                    StudentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VoteType = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    CommentId = table.Column<int>(type: "int", nullable: false)
+                    FName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sex = table.Column<int>(type: "int", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommentVote", x => x.CommentVoteId);
+                    table.PrimaryKey("PK_Students", x => x.StudentId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sex = table.Column<int>(type: "int", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_CommentVote_Comment_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comment",
-                        principalColumn: "CommentId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CommentVote_Students_StudentId",
+                        name: "FK_User_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "StudentId",
@@ -542,8 +534,8 @@ namespace GraduationProjectAlpha.Migrations
 
             migrationBuilder.InsertData(
                 table: "Students",
-                columns: new[] { "StudentId", "DateOfBirth", "Email", "FName", "LName", "Level", "Password", "PhoneNumber", "Sex" },
-                values: new object[] { 1, new DateTime(2001, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "AhmedMahmoud@Mail.com", "Ahmed", "Mahmoud", 12, "123456@Mail", "1234567890", 0 });
+                columns: new[] { "StudentId", "DateOfBirth", "Email", "FName", "LName", "Level", "Password", "PhoneNumber", "Sex", "UserId" },
+                values: new object[] { 1, new DateTime(2001, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "AhmedMahmoud@Mail.com", "Ahmed", "Mahmoud", 12, "123456@Mail", "1234567890", 0, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -688,11 +680,81 @@ namespace GraduationProjectAlpha.Migrations
                 name: "IX_StudentQuestionInteraction_StudentId",
                 table: "StudentQuestionInteraction",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_UserId",
+                table: "Students",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_StudentId",
+                table: "User",
+                column: "StudentId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Comment_Students_StudentId",
+                table: "Comment",
+                column: "StudentId",
+                principalTable: "Students",
+                principalColumn: "StudentId",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CommentVote_Students_StudentId",
+                table: "CommentVote",
+                column: "StudentId",
+                principalTable: "Students",
+                principalColumn: "StudentId",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CourseEnrollment_Students_StudentId",
+                table: "CourseEnrollment",
+                column: "StudentId",
+                principalTable: "Students",
+                principalColumn: "StudentId",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_StudentAssessmentInteraction_Students_StudentId",
+                table: "StudentAssessmentInteraction",
+                column: "StudentId",
+                principalTable: "Students",
+                principalColumn: "StudentId",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_StudentLessonInteraction_Students_StudentId",
+                table: "StudentLessonInteraction",
+                column: "StudentId",
+                principalTable: "Students",
+                principalColumn: "StudentId",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_StudentQuestionInteraction_Students_StudentId",
+                table: "StudentQuestionInteraction",
+                column: "StudentId",
+                principalTable: "Students",
+                principalColumn: "StudentId",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Students_User_UserId",
+                table: "Students",
+                column: "UserId",
+                principalTable: "User",
+                principalColumn: "UserId",
+                onDelete: ReferentialAction.Restrict);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_User_Students_StudentId",
+                table: "User");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -751,9 +813,6 @@ namespace GraduationProjectAlpha.Migrations
                 name: "Lesson");
 
             migrationBuilder.DropTable(
-                name: "Students");
-
-            migrationBuilder.DropTable(
                 name: "Module");
 
             migrationBuilder.DropTable(
@@ -761,6 +820,12 @@ namespace GraduationProjectAlpha.Migrations
 
             migrationBuilder.DropTable(
                 name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

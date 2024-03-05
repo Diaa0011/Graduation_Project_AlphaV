@@ -5,7 +5,7 @@
 namespace GraduationProjectAlpha.Migrations
 {
     /// <inheritdoc />
-    public partial class automapper : Migration
+    public partial class addCreateUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

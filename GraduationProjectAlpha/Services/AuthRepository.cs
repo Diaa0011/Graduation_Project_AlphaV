@@ -30,14 +30,16 @@ namespace GraduationProjectAlpha.Services
         }
         public async Task<bool> Register(User user)
         {
+
+            // Shater Notes --> Naming and Intersection
             var identityUser = new IdentityUser
             {
-                UserName = user.FName + "" + user.LName,
-                Email = user.Email,
+                UserName = user.Email,
             };
             var result = await _userManager.CreateAsync(identityUser, user.Password);
             
             return result.Succeeded;
+
         }
 
         public async Task<bool> Login(LoginUserDto user)
@@ -57,7 +59,6 @@ namespace GraduationProjectAlpha.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email,user.Email),
-                new Claim(ClaimTypes.Role,"Admin"),
                 new Claim(ClaimTypes.Role,"Student")
             };
 

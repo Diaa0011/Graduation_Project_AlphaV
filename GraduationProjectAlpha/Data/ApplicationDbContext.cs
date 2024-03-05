@@ -19,21 +19,7 @@ namespace GraduationProjectAlpha.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Student>().HasData(
-                new Student
-                {
-                    StudentId = 1,
-                    FName = "Ahmed",
-                    LName = "Mahmoud",
-                    PhoneNumber = "1234567890",
-                    Email="AhmedMahmoud@Mail.com",
-                    Password="123456@Mail",
-                    Sex = Sex.Male,
-                    DateOfBirth = new DateTime(2001, 02, 14),
-                    Level = Level.ThirdSecondary,
-
-                }
-                );
+            
             
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

@@ -21,6 +21,9 @@ namespace GraduationProjectAlpha.Model
         public Sex Sex { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Level Level { get; set; }
+        public int? UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
         public List<CourseEnrollment>? CourseEnrollments { get; set; }
         public List<StudentLessonInteraction>? StudentLessonInteractions { get; set; }
         public List<StudentQuestionInteraction>? StudentQuestionInteractions { get; set; }

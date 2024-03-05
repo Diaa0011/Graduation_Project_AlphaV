@@ -17,5 +17,6 @@ namespace GraduationProjectAlpha.Dtos.Student
         public Sex Sex { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Level Level { get; set; }
+        public int UserId { get; set; }
     }
 }
