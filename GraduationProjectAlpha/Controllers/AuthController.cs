@@ -4,6 +4,7 @@ using GraduationProjectAlpha.Dtos.User;
 using GraduationProjectAlpha.Model;
 using GraduationProjectAlpha.Services.IRepository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
@@ -18,20 +19,21 @@ namespace GraduationProjectAlpha.Controllers
         private readonly IAuthRepository _authRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AuthController(IUnitOfWork unitOfWork,IAuthRepository authRepository,IMapper mapper)
+        public AuthController(IUnitOfWork unitOfWork,
+            IAuthRepository authRepository,
+            IMapper mapper,
+            UserManager<IdentityUser> userManager)
         {
             _authRepository = authRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser(CreateUserDto user)
+        public async Task<IActionResult> RegisterUser(UserDto user)
         {
-            if (user == null)
-            {
-
-            }
             if (await _authRepository.Register(user))
             {
                 StudentUserLinking(user);
@@ -49,13 +51,12 @@ namespace GraduationProjectAlpha.Controllers
             if(await _authRepository.Login(user))
             {
                 var tokenString = _authRepository.GenerateToken(user);
-                
                 return Ok(tokenString);
             }
             return BadRequest("Some Thing Gone Mad, Go and Debug your code!");
 
         }
-        private ActionResult<StudentCreateDto> StudentUserLinking(User user)
+        private async Task<IActionResult> StudentUserLinking(UserDto user)
         {
             var student = new StudentCreateDto()
             {
@@ -67,19 +68,17 @@ namespace GraduationProjectAlpha.Controllers
                 Sex = user.Sex,
                 DateOfBirth = user.DateOfBirth,
                 Level = user.Level,
-                UserId = user.Id
-                
             };
 
             var studentToBeAdd = _mapper.Map<Student>(student);
 
-            _unitOfWork.Student.AddAsync(studentToBeAdd);
+            await _unitOfWork.Student.AddAsync(studentToBeAdd);
 
             _unitOfWork.Save();
 
-            var studentReadDto = _mapper.Map<StudentReadDto>(studentToBeAdd);
+            //var studentReadDto = _mapper.Map<StudentReadDto>(studentToBeAdd);
 
-            return Ok(studentReadDto);
+            return Ok();
 
         }
     }
