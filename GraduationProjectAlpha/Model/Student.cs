@@ -18,7 +18,6 @@ namespace GraduationProjectAlpha.Model
         public string Email { get; set; }
         //Security Credentials
         public string Password { get; set; }
-        public Sex Sex { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Level Level { get; set; }
         public List<CourseEnrollment>? CourseEnrollments { get; set; }

@@ -19,7 +19,7 @@ namespace GraduationProjectAlpha.Controllers
                 _unitOfWork = unitOfWork;
                 _mapper = mapper;
         }
-        [HttpGet,Authorize]
+        [HttpGet]
         public async Task<IActionResult> GetAllStudents()
         {
             var studentsCatch = await _unitOfWork.Student.GetAllAsync();

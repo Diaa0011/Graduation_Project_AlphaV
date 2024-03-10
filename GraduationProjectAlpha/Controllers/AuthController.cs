@@ -34,7 +34,11 @@ namespace GraduationProjectAlpha.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser(UserDto user)
         {
-            if (await _authRepository.Register(user))
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("fix your data first!");
+            }
+            if (!await _authRepository.Register(user))
             {
                 StudentUserLinking(user);
                 return Ok("User Added Successfully");
@@ -65,7 +69,6 @@ namespace GraduationProjectAlpha.Controllers
                 FName = user.FName,
                 LName = user.LName,
                 PhoneNumber = user.PhoneNumber,
-                Sex = user.Sex,
                 DateOfBirth = user.DateOfBirth,
                 Level = user.Level,
             };
