@@ -11,6 +11,6 @@ namespace GraduationProjectAlpha.Model
         public int DurationInMinutes { get; set; }
         public Section Section { get; set; }
         public List<Lesson> Lessons { get; set; }
-        public List<Assessment>? Assessments { get; set; }
+        public List<Quiz>? Assessments { get; set; }
     }
 }

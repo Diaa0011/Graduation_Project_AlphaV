@@ -38,7 +38,7 @@ namespace GraduationProjectAlpha.Controllers
             {
                 return BadRequest("fix your data first!");
             }
-            if (!await _authRepository.Register(user))
+            if (await _authRepository.Register(user))
             {
                 StudentUserLinking(user);
                 return Ok("User Added Successfully");
@@ -77,7 +77,7 @@ namespace GraduationProjectAlpha.Controllers
 
             await _unitOfWork.Student.AddAsync(studentToBeAdd);
 
-            _unitOfWork.Save();
+            _unitOfWork.SaveAsync();
 
             //var studentReadDto = _mapper.Map<StudentReadDto>(studentToBeAdd);
 

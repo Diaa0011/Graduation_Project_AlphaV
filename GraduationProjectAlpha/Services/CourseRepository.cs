@@ -4,12 +4,12 @@ using GraduationProjectAlpha.Services.IRepository;
 
 namespace GraduationProjectAlpha.Services
 {
-    public class StudentRepository : BaseRepository<Student>, IStudentRepository
+    public class CourseRepository : BaseRepository<Course> , ICourseRepository
     {
         private readonly ApplicationDbContext _context;
-        public StudentRepository(ApplicationDbContext db) : base(db)
+        public CourseRepository(ApplicationDbContext context) : base(context)
         {
-
+            _context = context;
         }
     }
 }

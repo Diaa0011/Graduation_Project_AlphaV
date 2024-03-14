@@ -23,7 +23,7 @@ namespace GraduationProjectAlpha.Model
         public List<CourseEnrollment>? CourseEnrollments { get; set; }
         public List<StudentLessonInteraction>? StudentLessonInteractions { get; set; }
         public List<StudentQuestionInteraction>? StudentQuestionInteractions { get; set; }
-        public List<StudentAssessmentInteraction>? StudentAssessmentInteractions { get; set; }
+        public List<StudentQuizInteraction>? StudentAssessmentInteractions { get; set; }
         public List<Comment>? Comments { get; set; }
         public List<CommentVote>? CommentVotes { get; set; }
 

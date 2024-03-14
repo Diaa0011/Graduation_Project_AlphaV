@@ -13,7 +13,7 @@ namespace GraduationProjectAlpha.Model
         public int DurationInSeconds { get; set; }
         public int Order { get; set; }
         public Module Module { get; set; }
-        public List<AssessmentLessonLinking>? AssessmentLessonLinkings { get; set; }
+        public List<QuizLessonLinking>? AssessmentLessonLinkings { get; set; }
         public List<Comment>? Comments { get; set; }
         public List<StudentLessonInteraction>? StudentLessonInteractions { get; set; }
     }

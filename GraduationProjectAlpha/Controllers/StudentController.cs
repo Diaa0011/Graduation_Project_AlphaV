@@ -9,7 +9,7 @@ using SQLitePCL;
 namespace GraduationProjectAlpha.Controllers
 {
     [ApiController]
-    [Route("students")]
+    [Route("api/[controller]")]
     public class StudentController:ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -36,7 +36,7 @@ namespace GraduationProjectAlpha.Controllers
         public async Task<ActionResult<Student>> AddStudent(Student student)
         {
             await _unitOfWork.Student.AddAsync(student);
-            _unitOfWork.Save();
+            _unitOfWork.SaveAsync();
             return CreatedAtRoute("GetStudent",new Student());
         }
     }

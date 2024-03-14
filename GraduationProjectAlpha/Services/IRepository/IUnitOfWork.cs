@@ -3,6 +3,9 @@
     public interface IUnitOfWork
     {
         IStudentRepository Student { get; }
-        void Save();
+        ICourseRepository Course { get; }
+        ICourseEnrollmentRepository CourseEnrollment { get; }
+
+        void SaveAsync();
     }
 }

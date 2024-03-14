@@ -1,18 +1,15 @@
 ﻿using GraduationProjectAlpha.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace GraduationProjectAlpha.Model
+namespace GraduationProjectAlpha.Dtos.Course
 {
-    public class Course
+    public class CourseForBrowisngDto
     {
-        [Key]
         public int CourseId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
         public CourseCategory Category { get; set; }
         public int DurationInMinutes { get; set; }
-        public List<CourseEnrollment>? CourseEnrollments { get; set; }
-        public List<Section> Sections { get; set; } = null!;
     }
 }

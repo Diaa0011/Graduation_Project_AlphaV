@@ -18,7 +18,7 @@ namespace GraduationProjectAlpha.Services
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
         private readonly IConfiguration _config;
@@ -33,7 +33,7 @@ namespace GraduationProjectAlpha.Services
             _userManager = userManager;
             _signInManager = signInManager;
             _config = configuration;
-            _db = db;
+            _context = db;
             _mapper = mapper;
         }
         public async Task<bool> Register(UserDto user)
@@ -65,8 +65,10 @@ namespace GraduationProjectAlpha.Services
         //Generate Token after Login
         public string GenerateToken(LoginUserDto user)
         {
+            var student = _context.Students.FirstOrDefault(s => s.Email == user.Email);
             var claims = new List<Claim>
             {
+                new Claim("StudentId", student.StudentId.ToString()),
                 new Claim(ClaimTypes.Email,user.Email),
                 new Claim(ClaimTypes.Role,"Student")
             };
