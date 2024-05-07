@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using GraduationProjectAlpha.Dtos.Course;
 using GraduationProjectAlpha.Services.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.Security.Claims;
 
 namespace GraduationProjectAlpha.Controllers
 {
@@ -56,5 +59,28 @@ namespace GraduationProjectAlpha.Controllers
             return Ok(new { myCoursesToReturn, remainingCourses });
         }
 
+        [HttpGet("{courseId}/details")]
+        public async Task<IActionResult> GetCourseDetails(int courseId)
+        {
+            var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
+            if (course == null) return BadRequest("There's no such course");
+            var courseDetails = _mapper.Map<CourseDetailsDto>(course);
+            var courseAvgRating = _unitOfWork.CourseEnrollment.CalculateCourseAvgRating(courseId);
+            courseDetails.RatingAverage = courseAvgRating;
+            
+            return Ok(courseDetails);
+        }
+        
+        [HttpPost("{courseId}/enroll")]
+        public async Task<IActionResult> EnrollInCourse(int courseId)
+        {
+
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
+
+            var studentId = int.Parse(User.FindFirstValue("StudentId"));
+            await _unitOfWork.CourseEnrollment.EnrollAsync(studentId, courseId);
+
+            return Ok();
+        }
     }
 }

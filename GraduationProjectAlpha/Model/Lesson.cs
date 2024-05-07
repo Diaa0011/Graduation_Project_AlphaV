@@ -10,7 +10,6 @@ namespace GraduationProjectAlpha.Model
         public string VideoUrl { get; set; }
         public string PdfUrl { get; set; }
         public string Description { get; set; }
-        public int DurationInSeconds { get; set; }
         public int Order { get; set; }
         public Module Module { get; set; }
         public List<QuizLessonLinking>? AssessmentLessonLinkings { get; set; }

@@ -63,13 +63,16 @@ namespace GraduationProjectAlpha.Services
         }
 
         //Generate Token after Login
-        public string GenerateToken(LoginUserDto user)
+        public string GenerateToken(LoginUserDto userDto)
         {
-            var student = _context.Students.FirstOrDefault(s => s.Email == user.Email);
+            var student = _context.Students.FirstOrDefault(s => s.Email == userDto.Email);
+            var user = _context.Users.FirstOrDefault(u => u.Email == userDto.Email);
+            if (student == null) return null;
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier , user.Id),
                 new Claim("StudentId", student.StudentId.ToString()),
-                new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.Email,userDto.Email),
                 new Claim(ClaimTypes.Role,"Student")
             };
 

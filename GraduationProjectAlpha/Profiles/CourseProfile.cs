@@ -9,6 +9,9 @@ namespace GraduationProjectAlpha.Profiles
         public CourseProfile()
         {
             CreateMap<Course, CourseForBrowisngDto>();
+            CreateMap<Course, CourseDetailsDto>()
+                .ForMember(dest => dest.CourseName, option => option.MapFrom(src => src.Name))
+                .ForMember(dest => dest.SectionDtos, opt => opt.MapFrom(src => src.Sections));
         }
     }
 }

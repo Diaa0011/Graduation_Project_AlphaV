@@ -7,10 +7,10 @@ namespace GraduationProjectAlpha.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StudentAssessmentId { get; set; }
+        public int StudentQuizId { get; set; }
         public int OverallGrade { get; set; }
         public Student Student { get; set; }
-        public Quiz Assessment { get; set; }
+        public Quiz Quiz { get; set; }
 
     }
 }

@@ -4,6 +4,7 @@ using GraduationProjectAlpha.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraduationProjectAlpha.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240425004546_UpdatingDBEntities")]
+    partial class UpdatingDBEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,7 +152,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EnrollmentDate")
+                    b.Property<DateTime>("EnrolmentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Rating")
@@ -427,24 +430,24 @@ namespace GraduationProjectAlpha.Migrations
 
             modelBuilder.Entity("GraduationProjectAlpha.Model.StudentQuizInteraction", b =>
                 {
-                    b.Property<int>("StudentQuizId")
+                    b.Property<int>("StudentAssessmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentQuizId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentAssessmentId"));
 
-                    b.Property<int>("OverallGrade")
+                    b.Property<int>("AssessmentQuizId")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuizId")
+                    b.Property<int>("OverallGrade")
                         .HasColumnType("int");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentQuizId");
+                    b.HasKey("StudentAssessmentId");
 
-                    b.HasIndex("QuizId");
+                    b.HasIndex("AssessmentQuizId");
 
                     b.HasIndex("StudentId");
 
@@ -742,7 +745,7 @@ namespace GraduationProjectAlpha.Migrations
             modelBuilder.Entity("GraduationProjectAlpha.Model.Quiz", b =>
                 {
                     b.HasOne("GraduationProjectAlpha.Model.Module", "Module")
-                        .WithMany("Quizzes")
+                        .WithMany("Assessments")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -820,9 +823,9 @@ namespace GraduationProjectAlpha.Migrations
 
             modelBuilder.Entity("GraduationProjectAlpha.Model.StudentQuizInteraction", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Model.Quiz", "Quiz")
+                    b.HasOne("GraduationProjectAlpha.Model.Quiz", "Assessment")
                         .WithMany("StudentQuizInteractions")
-                        .HasForeignKey("QuizId")
+                        .HasForeignKey("AssessmentQuizId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -832,7 +835,7 @@ namespace GraduationProjectAlpha.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Quiz");
+                    b.Navigation("Assessment");
 
                     b.Navigation("Student");
                 });
@@ -911,9 +914,9 @@ namespace GraduationProjectAlpha.Migrations
 
             modelBuilder.Entity("GraduationProjectAlpha.Model.Module", b =>
                 {
-                    b.Navigation("Lessons");
+                    b.Navigation("Assessments");
 
-                    b.Navigation("Quizzes");
+                    b.Navigation("Lessons");
                 });
 
             modelBuilder.Entity("GraduationProjectAlpha.Model.Question", b =>
