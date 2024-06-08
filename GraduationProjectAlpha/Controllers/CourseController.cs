@@ -67,10 +67,10 @@ namespace GraduationProjectAlpha.Controllers
             var courseDetails = _mapper.Map<CourseDetailsDto>(course);
             var courseAvgRating = _unitOfWork.CourseEnrollment.CalculateCourseAvgRating(courseId);
             courseDetails.RatingAverage = courseAvgRating;
-            
+
             return Ok(courseDetails);
         }
-        
+
         [HttpPost("{courseId}/enroll")]
         public async Task<IActionResult> EnrollInCourse(int courseId)
         {
@@ -81,6 +81,61 @@ namespace GraduationProjectAlpha.Controllers
             await _unitOfWork.CourseEnrollment.EnrollAsync(studentId, courseId);
 
             return Ok();
+        }
+
+        [HttpGet("{courseId}/content")]
+        public async Task<IActionResult> GetCourseContent(int courseId)
+        {
+            var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
+
+            if (course == null) return BadRequest("The course you are asking for may be not existing or have been removed");
+
+            var sections = course.Sections;
+
+            var sectionsDto = new List<SectionDto>();
+
+            foreach (var section in sections)
+            {
+                var sectionDto = _mapper.Map<SectionDto>(section);
+                sectionsDto.Add(sectionDto);
+            }
+
+            return Ok(sectionsDto);
+        }
+
+        [HttpGet("{courseId}/content/lesson/{lessonId}")]
+        public async Task<IActionResult> GetLessonContent(int courseId, int lessonId)
+        {
+            var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
+            if (course == null) return BadRequest("The course you are asking for may not be existing or has been removed");
+
+            var lesson = await _unitOfWork.Lesson.GetLessonFromCourseAsync(lessonId, courseId);
+            if (lesson == null) return BadRequest("The course you are asking for may not be existing or has been removed or the lesson doesn't belong to the course you're browsing for.");
+
+            var sections = course.Sections;
+
+            var sectionsDto = new List<SectionDto>();
+
+            foreach (var section in sections)
+            {
+                var sectionDto = _mapper.Map<SectionDto>(section);
+                sectionsDto.Add(sectionDto);
+            }
+
+            var lessonDto = _mapper.Map<LessonDto>(lesson);
+
+            return Ok(new { lessonDto, sectionsDto });
+        }
+
+        [HttpGet("{courseId}/content/quiz/{quizId}")]
+        public async Task<IActionResult> GetQuizContent(int courseId, int quizId)
+        {
+            var course = await _unitOfWork.Course.GetByIdAsync(courseId);
+            if (course == null) return BadRequest("The course you are asking for may not be existing or has been removed");
+            var quiz = await _unitOfWork.Quiz.GetQuizFromCourse(quizId, courseId);
+            if (quiz == null) return BadRequest("The quiz you're asking for may not be existing or has been removed or the quiz belong to other course");
+            var quizDto = _mapper.Map<QuizDto>(quiz);
+            return Ok(quizDto);
         }
     }
 }

@@ -4,12 +4,11 @@ using GraduationProjectAlpha.Model;
 
 namespace GraduationProjectAlpha.Profiles
 {
-    public class LessonProfile : Profile
+    public class ChoiceProfile : Profile
     {
-        public LessonProfile()
+        public ChoiceProfile()
         {
-            CreateMap<Lesson, LessonForCourseTreeDto>();
-            CreateMap<Lesson, LessonDto>();
+            CreateMap<Choice, ChoiceDto>();
         }
     }
 }

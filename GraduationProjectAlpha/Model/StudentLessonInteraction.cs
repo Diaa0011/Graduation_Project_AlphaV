@@ -8,7 +8,13 @@ namespace GraduationProjectAlpha.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StudentLessonId { get; set; }
+        [ForeignKey("LessonId")]
+        [Required]
+        public int LessonId { get; set; }
         public Lesson Lesson { get; set; }
+        [ForeignKey("StudentId")]
+        [Required]
+        public int StudentId { get; set; }
         public Student Student { get; set; }
     }
 }

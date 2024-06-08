@@ -7,7 +7,7 @@ namespace GraduationProjectAlpha.Dtos.Course
         public int ModuleId { get; set; }
         public string ModuleName { get; set; }
         public int Order { get; set; }
-        public List<LessonDto> LessonDtos { get; set; }
-        public List<QuizDto> QuizDtos { get; set; }
+        public List<LessonForCourseTreeDto> LessonDtos { get; set; }
+        public List<QuizForCourseTreeDto> QuizDtos { get; set; }
     }
 }

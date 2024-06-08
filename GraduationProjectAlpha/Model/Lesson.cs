@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProjectAlpha.Model
 {
@@ -11,6 +12,9 @@ namespace GraduationProjectAlpha.Model
         public string PdfUrl { get; set; }
         public string Description { get; set; }
         public int Order { get; set; }
+        [ForeignKey("ModuleId")]
+        [Required]
+        public int ModuleId { get; set; }
         public Module Module { get; set; }
         public List<QuizLessonLinking>? AssessmentLessonLinkings { get; set; }
         public List<Comment>? Comments { get; set; }

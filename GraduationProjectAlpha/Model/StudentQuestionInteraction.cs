@@ -11,7 +11,13 @@ namespace GraduationProjectAlpha.Model
         public int StudentQuestionId { get; set; }
         public int? StudentChoiceIndex { get; set; }
         public StudentChoiceStatus StudentChoiceStatus { get; set; }
+        [ForeignKey("QuestionId")]
+        [Required]
+        public int QuestionId { get; set; }
         public Question Question { get; set; }
+        [ForeignKey("StudentId")]
+        [Required]
+        public int StudentId { get; set; }
         public Student Student { get; set; }
     }
 }
