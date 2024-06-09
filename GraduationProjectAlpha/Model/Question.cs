@@ -18,7 +18,7 @@ namespace GraduationProjectAlpha.Model
         public Quiz Quiz { get; set; }
         public List<Choice> Choices { get; set; } =  new List<Choice>();
         public List<StudentQuestionInteraction>? StudentQuestionInteractions { get; set; }
-        //public string? ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         //public QuestionType QuestionType { get; set; }
 
     }

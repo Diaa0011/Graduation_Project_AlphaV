@@ -8,7 +8,7 @@ namespace GraduationProjectAlpha.Model
         [Key]
         public int ChoiceId { get; set; }
         public string? ChoiceText { get; set; }
-        public string? ChoiceImageUrl { get; set; }
+        //public string? ChoiceImageUrl { get; set; }
         public int Order { get; set; }
         [ForeignKey("QuestionId")]
         [Required]
