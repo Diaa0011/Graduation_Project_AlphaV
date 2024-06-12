@@ -9,15 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using GraduationProject.DatabaseSeeder.Context;
 using GraduationProjectAlpha.Model;
 using static System.Net.WebRequestMethods;
+using GraduationProjectAlpha.DbContexts;
 
 
 namespace GraduationProject.DatabaseSeeder
 {
     public class DataGenerator
     {
-        private readonly AppDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DataGenerator(AppDbContext context)
+        public DataGenerator(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -90,7 +91,6 @@ namespace GraduationProject.DatabaseSeeder
                             lesson.ModuleId = module.ModuleId;
                             _context.Lessons.Add(lesson);
                         }
-                        order = 0;
                         var quizzes = quizFaker.Generate(3);
                         foreach (var quiz in quizzes)
                         {
