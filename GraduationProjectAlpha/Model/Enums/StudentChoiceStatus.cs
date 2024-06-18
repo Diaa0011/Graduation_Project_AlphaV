@@ -2,8 +2,8 @@
 {
     public enum StudentChoiceStatus
     {
-        Correct,
         Wrong,
+        Correct,
         Missing
     }
 }

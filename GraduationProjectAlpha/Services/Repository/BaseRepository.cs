@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using GraduationProjectAlpha.Consts;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 
-namespace GraduationProjectAlpha.Services
+namespace GraduationProjectAlpha.Services.Repository
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {

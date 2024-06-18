@@ -1,7 +1,7 @@
 ﻿using GraduationProjectAlpha.Dtos.User;
 using GraduationProjectAlpha.Model;
 
-namespace GraduationProjectAlpha.Services.IRepository
+namespace GraduationProjectAlpha.Services.Repository.IRepository
 {
     public interface IAuthRepository
     {

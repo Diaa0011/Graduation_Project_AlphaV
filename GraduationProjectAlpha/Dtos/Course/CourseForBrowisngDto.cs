@@ -10,6 +10,6 @@ namespace GraduationProjectAlpha.Dtos.Course
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
         //public CourseCategory Category { get; set; }
-        public int DurationInMinutes { get; set; }
+        //public int DurationInMinutes { get; set; }
     }
 }

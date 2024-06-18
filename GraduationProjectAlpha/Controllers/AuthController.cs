@@ -2,7 +2,7 @@
 using GraduationProjectAlpha.Dtos.Student;
 using GraduationProjectAlpha.Dtos.User;
 using GraduationProjectAlpha.Model;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -77,7 +77,7 @@ namespace GraduationProjectAlpha.Controllers
 
             await _unitOfWork.Student.AddAsync(studentToBeAdd);
 
-            _unitOfWork.SaveAsync();
+            _unitOfWork.SaveChanges();
 
             //var studentReadDto = _mapper.Map<StudentReadDto>(studentToBeAdd);
 

@@ -1,6 +1,6 @@
 ﻿using GraduationProjectAlpha.Model;
 
-namespace GraduationProjectAlpha.Services.IRepository
+namespace GraduationProjectAlpha.Services.Repository.IRepository
 {
     public interface IQuizRepository : IBaseRepository<Quiz>
     {

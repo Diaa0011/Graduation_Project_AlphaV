@@ -10,6 +10,7 @@ namespace GraduationProjectAlpha.Profiles
         {
             CreateMap<Quiz, QuizForCourseTreeDto>();
             CreateMap<Quiz, QuizDto>();
+            CreateMap<Quiz, QuizReportDto>();
         }
     }
 }

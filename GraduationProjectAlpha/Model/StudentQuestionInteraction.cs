@@ -9,7 +9,7 @@ namespace GraduationProjectAlpha.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StudentQuestionId { get; set; }
-        public int? StudentChoiceIndex { get; set; }
+        public int? StudentChoiceId { get; set; }
         public StudentChoiceStatus StudentChoiceStatus { get; set; }
         [ForeignKey("QuestionId")]
         [Required]

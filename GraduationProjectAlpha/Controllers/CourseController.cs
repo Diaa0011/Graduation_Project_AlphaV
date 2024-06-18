@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using GraduationProjectAlpha.Dtos.Course;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Model;
+using GraduationProjectAlpha.Models.Enums;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +25,17 @@ namespace GraduationProjectAlpha.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> BrowseCourses()
+        public async Task<IActionResult> BrowseCourses([FromQuery] string? searchQuery)
         {
             var courses = await _unitOfWork.Course.GetAllAsync();
 
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                courses = courses.Where(c => 
+                c.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+                c.Description.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
             // Mapping courses upfront
             var allCoursesToReturn = courses.Select(course => _mapper.Map<CourseForBrowisngDto>(course)).ToList();
 
@@ -65,7 +74,7 @@ namespace GraduationProjectAlpha.Controllers
             var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
             if (course == null) return BadRequest("There's no such course");
             var courseDetails = _mapper.Map<CourseDetailsDto>(course);
-            var courseAvgRating = _unitOfWork.CourseEnrollment.CalculateCourseAvgRating(courseId);
+            var courseAvgRating = await _unitOfWork.CourseEnrollment.CalculateCourseAvgRatingAsync(courseId);
             courseDetails.RatingAverage = courseAvgRating;
 
             return Ok(courseDetails);
@@ -137,5 +146,87 @@ namespace GraduationProjectAlpha.Controllers
             var quizDto = _mapper.Map<QuizDto>(quiz);
             return Ok(quizDto);
         }
+
+        [HttpPost("{courseId}/content/quiz/{quizId}/submit")]
+        public async Task<IActionResult> SubmitQuiz(int courseId,int quizId,[FromBody] QuizSubmissionDto quizSubmissionDto)
+        {
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
+
+            var studentId = int.Parse(User.FindFirstValue("StudentId"));
+
+            // Validate course existence
+            var course = await _unitOfWork.Course.GetByIdAsync(courseId);
+            if (course == null)
+            {
+                return BadRequest("The course you're submitting to may not be existing");
+            }
+
+            // Validate quiz existence
+            var quiz = await _unitOfWork.Quiz.GetQuizFromCourse(quizId, courseId);
+            if (quiz == null)
+            {
+                return BadRequest("The quiz you're submitting to may not be existing or does not belong to the specified course");
+            }
+            var quizReport = _mapper.Map<QuizReportDto>(quiz);
+            // Initialize total grade
+            int totalGrade = 0;
+
+            // Process each question answer
+            foreach (var questionAnswer in quizSubmissionDto.QuestionAnswers)
+            {
+                var question = await _unitOfWork.Question.GetByIdAsync(questionAnswer.QuestionId);
+
+                if (question == null || question.QuizId != quiz.QuizId)
+                {
+                    return BadRequest($"Invalid question ID: {questionAnswer.QuestionId}");
+                }
+
+                var studentChoiceStatus = StudentChoiceStatus.Missing;
+                if (questionAnswer.ChoiceId.HasValue)
+                {
+                    studentChoiceStatus = questionAnswer.ChoiceId == question.RightChoiceId
+                        ? StudentChoiceStatus.Correct
+                        : StudentChoiceStatus.Wrong;
+                }
+
+                var studentQuestionInteraction = new StudentQuestionInteraction
+                {
+                    StudentId = studentId,
+                    QuestionId = question.QuestionId,
+                    StudentChoiceId = questionAnswer.ChoiceId,
+                    StudentChoiceStatus = studentChoiceStatus
+                };
+
+
+                // Add interaction to the database
+                await _unitOfWork.StudentQuestionInteraction.AddAsync(studentQuestionInteraction);
+
+                // Increment total grade if the answer is correct
+                if (studentQuestionInteraction.StudentChoiceStatus == StudentChoiceStatus.Correct)
+                {
+                    totalGrade += question.Grade;
+                }
+                var questionInReport = quizReport.Questions.FirstOrDefault(q => q.QuestionId == questionAnswer.QuestionId);
+                questionInReport.ChoiceStatus = studentChoiceStatus;
+                questionInReport.StudentChoiceId = questionAnswer.ChoiceId;
+                    
+            }
+
+            // Record student's interaction with the quiz
+            var studentQuizInteraction = new StudentQuizInteraction
+            {
+                StudentId = studentId,
+                QuizId = quiz.QuizId,
+                OverallGrade = totalGrade
+            };
+
+            await _unitOfWork.StudentQuizInteraction.AddAsync(studentQuizInteraction);
+
+            // Save all changes to the database
+            _unitOfWork.SaveChanges();
+
+            return Ok(new { totalGrade, quizReport });
+        }
+
     }
 }

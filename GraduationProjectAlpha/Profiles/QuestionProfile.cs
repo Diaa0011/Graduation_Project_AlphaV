@@ -9,6 +9,8 @@ namespace GraduationProjectAlpha.Profiles
         public QuestionProfile()
         { 
             CreateMap<Question, QuestionDto>();
+            CreateMap<Question, QuestionWithStudentAnswerDto>();
+
         }
     }
 }

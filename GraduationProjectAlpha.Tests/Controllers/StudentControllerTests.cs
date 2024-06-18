@@ -4,7 +4,7 @@ using FluentAssertions;
 using GraduationProjectAlpha.Controllers;
 using GraduationProjectAlpha.Dtos.Student;
 using GraduationProjectAlpha.Model;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

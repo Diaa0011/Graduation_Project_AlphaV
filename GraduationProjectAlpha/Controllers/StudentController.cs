@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using GraduationProjectAlpha.Dtos.Student;
 using GraduationProjectAlpha.Model;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SQLitePCL;
@@ -36,7 +36,7 @@ namespace GraduationProjectAlpha.Controllers
         public async Task<ActionResult<Student>> AddStudent(Student student)
         {
             await _unitOfWork.Student.AddAsync(student);
-            _unitOfWork.SaveAsync();
+            _unitOfWork.SaveChanges();
             return CreatedAtRoute("GetStudent",new Student());
         }
     }

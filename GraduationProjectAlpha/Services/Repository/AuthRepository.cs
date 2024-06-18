@@ -4,7 +4,7 @@ using GraduationProjectAlpha.Dtos.Student;
 using GraduationProjectAlpha.Dtos.User;
 using GraduationProjectAlpha.Model;
 using GraduationProjectAlpha.Models.Enums;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace GraduationProjectAlpha.Services
+namespace GraduationProjectAlpha.Services.Repository
 {
     public class AuthRepository : IAuthRepository
     {
@@ -23,7 +23,7 @@ namespace GraduationProjectAlpha.Services
 
         private readonly IConfiguration _config;
 
-       
+
         public AuthRepository(UserManager<IdentityUser> userManager,
             IConfiguration configuration,
             SignInManager<IdentityUser> signInManager,
@@ -46,7 +46,7 @@ namespace GraduationProjectAlpha.Services
                 Email = user.Email
             };
             var result = await _userManager.CreateAsync(identityUser, user.Password);
-            
+
             return result.Succeeded;
 
         }
@@ -78,7 +78,7 @@ namespace GraduationProjectAlpha.Services
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
 
-            var signingCred = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha512Signature);
+            var signingCred = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
 
             var securityToken = new JwtSecurityToken(
                 claims: claims,
@@ -89,9 +89,9 @@ namespace GraduationProjectAlpha.Services
                 );
             string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-            return tokenString; 
+            return tokenString;
         }
 
-        
+
     }
 }

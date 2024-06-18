@@ -1,10 +1,10 @@
 ﻿using GraduationProjectAlpha.Model;
 
-namespace GraduationProjectAlpha.Services.IRepository
+namespace GraduationProjectAlpha.Services.Repository.IRepository
 {
     public interface ICourseEnrollmentRepository : IBaseRepository<CourseEnrollment>
     {
-        public double CalculateCourseAvgRating(int courseId);
+        public Task<double> CalculateCourseAvgRatingAsync(int courseId);
         public Task EnrollAsync(int studentId, int courseId);
     }
 }

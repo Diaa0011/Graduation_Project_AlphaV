@@ -1,9 +1,9 @@
 ﻿using GraduationProjectAlpha.DbContexts;
 using GraduationProjectAlpha.Model;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraduationProjectAlpha.Services
+namespace GraduationProjectAlpha.Services.Repository
 {
     public class CourseEnrollmentRepository : BaseRepository<CourseEnrollment>, ICourseEnrollmentRepository
     {
@@ -25,7 +25,7 @@ namespace GraduationProjectAlpha.Services
 
             var course = _context.Courses.FirstOrDefault(c => c.CourseId == courseId);
 
-            if(course == null) return; 
+            if (course == null) return;
 
             var student = _context.Students.FirstOrDefault(s => s.StudentId == studentId);
 
@@ -38,16 +38,13 @@ namespace GraduationProjectAlpha.Services
             await _context.SaveChangesAsync();
         }
 
-        public double CalculateCourseAvgRating(int courseId)
+        public async Task<double> CalculateCourseAvgRatingAsync(int courseId)
         {
-            var course = _context.Courses.FirstOrDefaultAsync(c => c.CourseId == courseId);
-            
-            if (course == null) return -1;
+            var avgRatingQuery = _context.CourseEnrollments
+                .Where(e => e.Rating.HasValue && e.CourseId == courseId); //.Average(e => (double) e.Rating.Value)
 
-            var avgRating = (double) _context.CourseEnrollments
-                .Where(e => e.Rating.HasValue)
-                .Average(e => (double) e.Rating.Value);
-
+            if (!avgRatingQuery.Any()) return -1;
+            var avgRating = avgRatingQuery.Average(e => (double)e.Rating.Value);
             avgRating = Math.Round(avgRating, 1);
 
             return avgRating;

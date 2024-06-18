@@ -4,7 +4,6 @@ using FluentAssertions;
 using GraduationProjectAlpha.Controllers;
 using GraduationProjectAlpha.Dtos.User;
 using GraduationProjectAlpha.Services;
-using GraduationProjectAlpha.Services.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -22,6 +21,7 @@ using Newtonsoft.Json;
 using System.Net;
 using FakeItEasy;
 using System.ComponentModel.DataAnnotations;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 
 namespace GraduationProjectAlpha.Tests.Controllers
 {

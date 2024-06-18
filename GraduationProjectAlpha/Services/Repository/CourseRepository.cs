@@ -1,11 +1,11 @@
 ﻿using GraduationProjectAlpha.DbContexts;
 using GraduationProjectAlpha.Model;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraduationProjectAlpha.Services
+namespace GraduationProjectAlpha.Services.Repository
 {
-    public class CourseRepository : BaseRepository<Course> , ICourseRepository
+    public class CourseRepository : BaseRepository<Course>, ICourseRepository
     {
         private readonly ApplicationDbContext _context;
         public CourseRepository(ApplicationDbContext context) : base(context)
@@ -17,7 +17,7 @@ namespace GraduationProjectAlpha.Services
         {
             var course = await _context.Courses.FirstOrDefaultAsync(c => c.CourseId == id);
 
-            if(course == null)
+            if (course == null)
             {
                 return null;
             }
@@ -26,10 +26,10 @@ namespace GraduationProjectAlpha.Services
             foreach (var section in course.Sections)
             {
                 _context.Entry(section).Collection(s => s.Modules).Load();
-                
+
                 foreach (var module in section.Modules)
                 {
-                    _context.Entry(module).Collection(m => m.Lessons).Load();                    
+                    _context.Entry(module).Collection(m => m.Lessons).Load();
                 }
                 foreach (var module in section.Modules)
                 {

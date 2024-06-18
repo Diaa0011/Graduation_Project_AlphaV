@@ -1,12 +1,14 @@
 using GraduationProjectAlpha.DbContexts;
-using GraduationProjectAlpha.Services.IRepository;
-using GraduationProjectAlpha.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
+using GraduationProjectAlpha.Services.Repository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 

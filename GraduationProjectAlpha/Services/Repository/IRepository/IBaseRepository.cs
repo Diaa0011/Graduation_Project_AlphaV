@@ -1,7 +1,7 @@
 ﻿using GraduationProjectAlpha.Consts;
 using System.Linq.Expressions;
 
-namespace GraduationProjectAlpha.Services.IRepository
+namespace GraduationProjectAlpha.Services.Repository.IRepository
 {
     public interface IBaseRepository<T> where T : class
     {

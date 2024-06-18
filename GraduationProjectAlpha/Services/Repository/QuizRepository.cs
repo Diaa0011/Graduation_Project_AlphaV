@@ -1,9 +1,9 @@
 ﻿using GraduationProjectAlpha.DbContexts;
 using GraduationProjectAlpha.Model;
-using GraduationProjectAlpha.Services.IRepository;
+using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraduationProjectAlpha.Services
+namespace GraduationProjectAlpha.Services.Repository
 {
     public class QuizRepository : BaseRepository<Quiz>, IQuizRepository
     {
