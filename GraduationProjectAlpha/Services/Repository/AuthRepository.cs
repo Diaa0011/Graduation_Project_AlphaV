@@ -43,7 +43,8 @@ namespace GraduationProjectAlpha.Services.Repository
             var identityUser = new IdentityUser
             {
                 UserName = user.Email,
-                Email = user.Email
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
             };
             var result = await _userManager.CreateAsync(identityUser, user.Password);
 
@@ -54,8 +55,9 @@ namespace GraduationProjectAlpha.Services.Repository
         public async Task<bool> Login(LoginUserDto user)
         {
             //var identityUser = await _userManager.FindByEmailAsync(user.Email);
+            
             var identityUser = await _signInManager.PasswordSignInAsync(user.Email, user.Password, false, lockoutOnFailure: false);
-            if (identityUser is null)
+            if (identityUser is null || identityUser == SignInResult.Failed)
             {
                 return false;
             }
@@ -82,7 +84,7 @@ namespace GraduationProjectAlpha.Services.Repository
 
             var securityToken = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.Now.AddMinutes(249), // 240 minutes to be added in AddMinutes(240)
                 issuer: _config.GetSection("Jwt:Issuer").Value,
                 audience: _config.GetSection("Jwt:Audience").Value,
                 signingCredentials: signingCred

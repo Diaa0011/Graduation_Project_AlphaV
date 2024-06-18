@@ -15,12 +15,14 @@ namespace GraduationProjectAlpha.Dtos.User
         ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Required]
+        public string ConfirmPassword { get; set; }
         [Required(ErrorMessage = "First name is required")]
         public string FName { get; set; }
         [Required(ErrorMessage = "Last name is required")]
         public string LName { get; set; }
         [Required(ErrorMessage = "Phone number is required")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid phone number format. Use 10 digits.")]
+        [RegularExpression(@"^\d{11}$", ErrorMessage = "Invalid phone number format. Use 11 digits.")]
         public string PhoneNumber { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
