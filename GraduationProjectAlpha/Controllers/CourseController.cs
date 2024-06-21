@@ -39,7 +39,7 @@ namespace GraduationProjectAlpha.Controllers
             // Mapping courses upfront
             var allCoursesToReturn = courses.Select(course => _mapper.Map<CourseForBrowisngDto>(course)).ToList();
 
-            if (!User.Identity.IsAuthenticated) return Ok(allCoursesToReturn);
+            if (!User.Identity.IsAuthenticated) return new JsonResult(allCoursesToReturn) { ContentType = "application/json" };
 
             // Error handling for parsing StudentId and fetching student
             if (!int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "StudentId")?.Value, out var studentId))
@@ -65,14 +65,14 @@ namespace GraduationProjectAlpha.Controllers
             // Remove enrolled courses from all courses
             var remainingCourses = allCoursesToReturn.ExceptBy(myCoursesToReturn.Select(c => c.CourseId), c => c.CourseId).ToList();
 
-            return Ok(new { myCoursesToReturn, remainingCourses });
+            return new JsonResult(new { myCoursesToReturn, remainingCourses }) { ContentType = "application/json" };
         }
 
         [HttpGet("{courseId}/details")]
         public async Task<IActionResult> GetCourseDetails(int courseId)
         {
             var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
-            if (course == null) return BadRequest("There's no such course");
+            if (course == null) return NotFound("There's no such course");
             var courseDetails = _mapper.Map<CourseDetailsDto>(course);
             var courseAvgRating = await _unitOfWork.CourseEnrollment.CalculateCourseAvgRatingAsync(courseId);
             courseDetails.RatingAverage = courseAvgRating;
@@ -87,17 +87,25 @@ namespace GraduationProjectAlpha.Controllers
             if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var studentId = int.Parse(User.FindFirstValue("StudentId"));
+
+            var course = _unitOfWork.Course.GetById(courseId);
+            if(course == null)
+            {
+                return NotFound("The course doesn't exist");
+            }
             await _unitOfWork.CourseEnrollment.EnrollAsync(studentId, courseId);
 
-            return Ok();
+            return Ok("The student has been enrolled to course sucessfuly");
         }
 
         [HttpGet("{courseId}/content")]
         public async Task<IActionResult> GetCourseContent(int courseId)
         {
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
+
             var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
 
-            if (course == null) return BadRequest("The course you are asking for may be not existing or have been removed");
+            if (course == null) return NotFound("The course you are asking for may be not existing or have been removed");
 
             var sections = course.Sections;
 
@@ -115,11 +123,13 @@ namespace GraduationProjectAlpha.Controllers
         [HttpGet("{courseId}/content/lesson/{lessonId}")]
         public async Task<IActionResult> GetLessonContent(int courseId, int lessonId)
         {
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
+
             var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
-            if (course == null) return BadRequest("The course you are asking for may not be existing or has been removed");
+            if (course == null) return NotFound("The course you are asking for may not be existing or has been removed");
 
             var lesson = await _unitOfWork.Lesson.GetLessonFromCourseAsync(lessonId, courseId);
-            if (lesson == null) return BadRequest("The course you are asking for may not be existing or has been removed or the lesson doesn't belong to the course you're browsing for.");
+            if (lesson == null) return NotFound("The course you are asking for may not be existing or has been removed or the lesson doesn't belong to the course you're browsing for.");
 
             var sections = course.Sections;
 
@@ -139,10 +149,12 @@ namespace GraduationProjectAlpha.Controllers
         [HttpGet("{courseId}/content/quiz/{quizId}")]
         public async Task<IActionResult> GetQuizContent(int courseId, int quizId)
         {
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
+
             var course = await _unitOfWork.Course.GetByIdAsync(courseId);
-            if (course == null) return BadRequest("The course you are asking for may not be existing or has been removed");
+            if (course == null) return NotFound("The course you are asking for may not be existing or has been removed");
             var quiz = await _unitOfWork.Quiz.GetQuizFromCourse(quizId, courseId);
-            if (quiz == null) return BadRequest("The quiz you're asking for may not be existing or has been removed or the quiz belong to other course");
+            if (quiz == null) return NotFound("The quiz you're asking for may not be existing or has been removed or the quiz belong to other course");
             var quizDto = _mapper.Map<QuizDto>(quiz);
             return Ok(quizDto);
         }
@@ -158,14 +170,14 @@ namespace GraduationProjectAlpha.Controllers
             var course = await _unitOfWork.Course.GetByIdAsync(courseId);
             if (course == null)
             {
-                return BadRequest("The course you're submitting to may not be existing");
+                return NotFound("The course you're submitting to may not be existing");
             }
 
             // Validate quiz existence
             var quiz = await _unitOfWork.Quiz.GetQuizFromCourse(quizId, courseId);
             if (quiz == null)
             {
-                return BadRequest("The quiz you're submitting to may not be existing or does not belong to the specified course");
+                return NotFound("The quiz you're submitting to may not be existing or does not belong to the specified course");
             }
             var quizReport = _mapper.Map<QuizReportDto>(quiz);
             // Initialize total grade
