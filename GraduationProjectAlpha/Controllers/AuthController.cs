@@ -43,7 +43,7 @@ namespace GraduationProjectAlpha.Controllers
                 StudentUserLinking(user);
                 return Ok("User Added Successfully");
             }
-            return BadRequest("SomethingWentWrong");
+            return BadRequest("Something Went Wrong");
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginUserDto user)
@@ -57,7 +57,7 @@ namespace GraduationProjectAlpha.Controllers
                 var tokenString = _authRepository.GenerateToken(user);
                 return Ok(tokenString);
             }
-            return BadRequest("Some Thing Gone Mad, Go and Debug your code!");
+            return Unauthorized("Wrong email or password!");
 
         }
         private async Task<IActionResult> StudentUserLinking(UserDto user)
