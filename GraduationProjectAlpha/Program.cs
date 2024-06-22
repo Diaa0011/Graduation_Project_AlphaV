@@ -9,6 +9,7 @@ using GraduationProjectAlpha.Services.Repository;
 using GraduationProjectAlpha.Services.Repository.IRepository;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,9 +50,29 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
     };
 });
-builder.Services.AddControllers().AddJsonOptions(options =>
+builder.Services.AddControllers(options =>
+{
+    options.RespectBrowserAcceptHeader = true; // This allows respecting the Accept header
+    options.ReturnHttpNotAcceptable = true;    // This will return 406 Not Acceptable if the requested format is not available
+    options.OutputFormatters.RemoveType<StringOutputFormatter>();
+    options.OutputFormatters.RemoveType<StreamOutputFormatter>();
+    options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+    options.OutputFormatters.RemoveType<XmlDataContractSerializerOutputFormatter>();
+    options.OutputFormatters.RemoveType<XmlSerializerOutputFormatter>();
+})
+.AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+        // .AllowCredentials(); // AllowCredentials cannot be used with AllowAnyOrigin
+    });
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();

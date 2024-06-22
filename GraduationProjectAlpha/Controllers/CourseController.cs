@@ -64,7 +64,7 @@ namespace GraduationProjectAlpha.Controllers
 
             // Remove enrolled courses from all courses
             var remainingCourses = allCoursesToReturn.ExceptBy(myCoursesToReturn.Select(c => c.CourseId), c => c.CourseId).ToList();
-
+            
             return new JsonResult(new { myCoursesToReturn, remainingCourses }) { ContentType = "application/json" };
         }
 
@@ -149,7 +149,7 @@ namespace GraduationProjectAlpha.Controllers
         [HttpGet("{courseId}/content/quiz/{quizId}")]
         public async Task<IActionResult> GetQuizContent(int courseId, int quizId)
         {
-            if (!User.Identity.IsAuthenticated) return Unauthorized();
+            //if (!User.Identity.IsAuthenticated) return Unauthorized();
 
             var course = await _unitOfWork.Course.GetByIdAsync(courseId);
             if (course == null) return NotFound("The course you are asking for may not be existing or has been removed");
