@@ -39,63 +39,84 @@ namespace GraduationProjectAlpha.Controllers
             // Mapping courses upfront
             var allCoursesToReturn = courses.Select(course => _mapper.Map<CourseForBrowisngDto>(course)).ToList();
 
-            if (!User.Identity.IsAuthenticated) return new JsonResult(allCoursesToReturn) { ContentType = "application/json" };
+            /*if (!User.Identity.IsAuthenticated) */
+            return new JsonResult(allCoursesToReturn) { ContentType = "application/json" };
 
-            // Error handling for parsing StudentId and fetching student
-            if (!int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "StudentId")?.Value, out var studentId))
-            {
-                return BadRequest("Invalid or missing StudentId claim.");
-            }
+            //// Error handling for parsing StudentId and fetching student
+            //if (!int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "StudentId")?.Value, out var studentId))
+            //{
+            //    return BadRequest("Invalid or missing StudentId claim.");
+            //}
 
-            var student = await _unitOfWork.Student.FindAsync(s => s.StudentId == studentId);
-            if (student == null)
-            {
-                return NotFound("Student not found.");
-            }
+            //var student = await _unitOfWork.Student.FindAsync(s => s.StudentId == studentId);
+            //if (student == null)
+            //{
+            //    return NotFound("Student not found.");
+            //}
 
-            var enrolledCourseIds = _unitOfWork.CourseEnrollment
-                .GetAll()
-                .Where(ce => ce.Student.StudentId == studentId)
-                .Select(ce => ce.Course.CourseId)
-                .ToList();
+            //var enrolledCourseIds = _unitOfWork.CourseEnrollment
+            //    .GetAll()
+            //    .Where(ce => ce.Student.StudentId == studentId)
+            //    .Select(ce => ce.Course.CourseId)
+            //    .ToList();
 
-            // Filter courses based on enrollment
-            var myCoursesToReturn = allCoursesToReturn.Where(c => enrolledCourseIds.Contains(c.CourseId)).ToList();
+            //// Filter courses based on enrollment
+            //var myCoursesToReturn = allCoursesToReturn.Where(c => enrolledCourseIds.Contains(c.CourseId)).ToList();
 
-            // Remove enrolled courses from all courses
-            var remainingCourses = allCoursesToReturn.ExceptBy(myCoursesToReturn.Select(c => c.CourseId), c => c.CourseId).ToList();
+            //// Remove enrolled courses from all courses
+            //var remainingCourses = allCoursesToReturn.ExceptBy(myCoursesToReturn.Select(c => c.CourseId), c => c.CourseId).ToList();
             
-            return new JsonResult(new { myCoursesToReturn, remainingCourses }) { ContentType = "application/json" };
+            //return new JsonResult(new { myCoursesToReturn, remainingCourses }) { ContentType = "application/json" };
         }
 
         [HttpGet("{courseId}/details")]
         public async Task<IActionResult> GetCourseDetails(int courseId)
         {
-            var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
-            if (course == null) return NotFound("There's no such course");
-            var courseDetails = _mapper.Map<CourseDetailsDto>(course);
-            var courseAvgRating = await _unitOfWork.CourseEnrollment.CalculateCourseAvgRatingAsync(courseId);
-            courseDetails.RatingAverage = courseAvgRating;
-
-            return Ok(courseDetails);
-        }
-
-        [HttpPost("{courseId}/enroll")]
-        public async Task<IActionResult> EnrollInCourse(int courseId)
-        {
-
-            if (!User.Identity.IsAuthenticated) return Unauthorized();
+            if (!User.Identity.IsAuthenticated)
+                return Unauthorized();
 
             var studentId = int.Parse(User.FindFirstValue("StudentId"));
 
-            var course = _unitOfWork.Course.GetById(courseId);
-            if(course == null)
+            var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
+            if (course == null)
             {
                 return NotFound("The course doesn't exist");
             }
+
+            var enrollments = await _unitOfWork.CourseEnrollment.GetAllAsync();
+            var isEnrolled = enrollments.Any(ce => ce.StudentId == studentId && ce.CourseId == courseId);
+
+            var courseDetailsDto = _mapper.Map<CourseDetailsDto>(course);
+            courseDetailsDto.IsEnrolled = isEnrolled;
+
+            return Ok(courseDetailsDto);
+        }
+        [HttpPost("{courseId}/enroll")]
+        public async Task<IActionResult> EnrollInCourse(int courseId)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return Unauthorized();
+
+            var studentId = int.Parse(User.FindFirstValue("StudentId"));
+
+            var course = await _unitOfWork.Course.GetByIdAsync(courseId);
+            if (course == null)
+            {
+                return NotFound("The course doesn't exist");
+            }
+
+            // Check if the student is already enrolled in the course
+            var existingEnrollment = await _unitOfWork.CourseEnrollment
+                .FindAsync(ce => ce.StudentId == studentId && ce.CourseId == courseId);
+
+            if (existingEnrollment != null)
+            {
+                return Conflict("The student is already enrolled in this course");
+            }
+
             await _unitOfWork.CourseEnrollment.EnrollAsync(studentId, courseId);
 
-            return Ok("The student has been enrolled to course sucessfuly");
+            return Ok("The student has been enrolled to the course successfully");
         }
 
         [HttpGet("{courseId}/content")]
