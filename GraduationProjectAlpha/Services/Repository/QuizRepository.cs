@@ -25,7 +25,7 @@ namespace GraduationProjectAlpha.Services.Repository
                 ;
 
             if (quiz == null) return null;
-            if (quiz.Module.Section.Course.CourseId != quizId) return null;
+            if (quiz.Module.Section.Course.CourseId != courseId) return null;
             return quiz;
         }
     }
