@@ -71,7 +71,7 @@ namespace GraduationProjectAlpha.Controllers
                 .ToList();
 
             if (enrolledCourseIds == null || !enrolledCourseIds.Any())
-                return Ok("There's no enrolled courses for this student");
+                return NoContent();
 
             // Filter courses based on enrollment
             var myCoursesToReturn = allCoursesToReturn.Where(c => enrolledCourseIds.Contains(c.CourseId)).ToList();

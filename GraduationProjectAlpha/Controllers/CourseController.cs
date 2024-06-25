@@ -72,11 +72,7 @@ namespace GraduationProjectAlpha.Controllers
         [HttpGet("{courseId}/details")]
         public async Task<IActionResult> GetCourseDetails(int courseId)
         {
-            if (!User.Identity.IsAuthenticated)
-                return Unauthorized();
-
-            var studentId = int.Parse(User.FindFirstValue("StudentId"));
-
+            
             var course = await _unitOfWork.Course.GetCourseDetailsAsync(courseId);
             if (course == null)
             {
@@ -84,7 +80,12 @@ namespace GraduationProjectAlpha.Controllers
             }
 
             var enrollments = await _unitOfWork.CourseEnrollment.GetAllAsync();
-            var isEnrolled = enrollments.Any(ce => ce.StudentId == studentId && ce.CourseId == courseId);
+            bool isEnrolled = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                var studentId = int.Parse(User.FindFirstValue("StudentId"));
+                isEnrolled = enrollments.Any(ce => ce.StudentId == studentId && ce.CourseId == courseId);
+            }
 
             var courseDetailsDto = _mapper.Map<CourseDetailsDto>(course);
             courseDetailsDto.IsEnrolled = isEnrolled;
@@ -99,10 +100,16 @@ namespace GraduationProjectAlpha.Controllers
 
             var studentId = int.Parse(User.FindFirstValue("StudentId"));
 
+            var student = await _unitOfWork.Student.GetByIdAsync(studentId);
+            
             var course = await _unitOfWork.Course.GetByIdAsync(courseId);
             if (course == null)
             {
                 return NotFound("The course doesn't exist");
+            }
+            if (!student.HasPaid)
+            {
+                return StatusCode(403,"You haven't paid site's fee yet!");
             }
 
             // Check if the student is already enrolled in the course
@@ -152,19 +159,19 @@ namespace GraduationProjectAlpha.Controllers
             var lesson = await _unitOfWork.Lesson.GetLessonFromCourseAsync(lessonId, courseId);
             if (lesson == null) return NotFound("The course you are asking for may not be existing or has been removed or the lesson doesn't belong to the course you're browsing for.");
 
-            var sections = course.Sections;
+            //var sections = course.Sections;
 
-            var sectionsDto = new List<SectionDto>();
+            //var sectionsDto = new List<SectionDto>();
 
-            foreach (var section in sections)
-            {
-                var sectionDto = _mapper.Map<SectionDto>(section);
-                sectionsDto.Add(sectionDto);
-            }
+            //foreach (var section in sections)
+            //{
+            //    var sectionDto = _mapper.Map<SectionDto>(section);
+            //    sectionsDto.Add(sectionDto);
+            //}
 
             var lessonDto = _mapper.Map<LessonDto>(lesson);
 
-            return Ok(new { lessonDto, sectionsDto });
+            return Ok(lessonDto);
         }
 
         [HttpGet("{courseId}/content/quiz/{quizId}")]

@@ -20,6 +20,7 @@ namespace GraduationProjectAlpha.Model
         public string Password { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Level Level { get; set; }
+        public bool HasPaid { get; set; }
         public List<CourseEnrollment>? CourseEnrollments { get; set; }
         public List<StudentLessonInteraction>? StudentLessonInteractions { get; set; }
         public List<StudentQuestionInteraction>? StudentQuestionInteractions { get; set; }
