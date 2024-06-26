@@ -184,7 +184,7 @@ namespace GraduationProjectAlpha.Controllers
             var quiz = await _unitOfWork.Quiz.GetQuizFromCourse(quizId, courseId);
             if (quiz == null) return NotFound("The quiz you're asking for may not be existing or has been removed or the quiz belong to other course");
             var quizDto = _mapper.Map<QuizDto>(quiz);
-            return Ok(quizDto);
+            return Ok(quiz);
         }
 
         [HttpPost("{courseId}/content/quiz/{quizId}/submit")]

@@ -75,7 +75,9 @@ namespace GraduationProjectAlpha.Services.Repository
                 new Claim(ClaimTypes.NameIdentifier , user.Id),
                 new Claim("StudentId", student.StudentId.ToString()),
                 new Claim(ClaimTypes.Email,userDto.Email),
-                new Claim(ClaimTypes.Role,"Student")
+                new Claim(ClaimTypes.Role,"Student"),
+                new Claim(ClaimTypes.Name, student.FName),
+                new Claim(ClaimTypes.Surname, student.LName)
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
