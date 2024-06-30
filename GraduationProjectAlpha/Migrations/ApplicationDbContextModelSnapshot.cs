@@ -22,96 +22,13 @@ namespace GraduationProjectAlpha.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Assessment", b =>
-                {
-                    b.Property<int>("AssessmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssessmentId"));
-
-                    b.Property<int>("AssessmentType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AssessmentId");
-
-                    b.HasIndex("ModuleId");
-
-                    b.ToTable("Assessment");
-                });
-
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.AssessmentLessonLinking", b =>
-                {
-                    b.Property<int>("AssessmentLessonLinkingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssessmentLessonLinkingId"));
-
-                    b.Property<int>("AssessmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AssessmentLessonLinkingId");
-
-                    b.HasIndex("AssessmentId");
-
-                    b.HasIndex("LessonId");
-
-                    b.ToTable("AssessmentLessonLinking");
-                });
-
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.AssessmentQuestion", b =>
-                {
-                    b.Property<int>("AssessmentQuestionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssessmentQuestionId"));
-
-                    b.Property<int>("AssessmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AssessmentQuestionId");
-
-                    b.HasIndex("AssessmentId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("AssessmentQuestion");
-                });
-
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Choice", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Choice", b =>
                 {
                     b.Property<int>("ChoiceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChoiceId"));
-
-                    b.Property<string>("ChoiceImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ChoiceText")
                         .HasColumnType("nvarchar(max)");
@@ -126,10 +43,10 @@ namespace GraduationProjectAlpha.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Choice");
+                    b.ToTable("Choices");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Comment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Comment", b =>
                 {
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
@@ -156,7 +73,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.CommentVote", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.CommentVote", b =>
                 {
                     b.Property<int>("CommentVoteId")
                         .ValueGeneratedOnAdd()
@@ -182,7 +99,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("CommentVote");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Course", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Course", b =>
                 {
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
@@ -190,17 +107,23 @@ namespace GraduationProjectAlpha.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DurationInMinutes")
-                        .HasColumnType("int");
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IntroductionVideoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeacherName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -209,7 +132,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.CourseEnrollment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.CourseEnrollment", b =>
                 {
                     b.Property<int>("CourseEnrollmentId")
                         .ValueGeneratedOnAdd()
@@ -220,7 +143,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EnrolmentDate")
+                    b.Property<DateTime>("EnrollmentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Rating")
@@ -235,10 +158,10 @@ namespace GraduationProjectAlpha.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("CourseEnrollment");
+                    b.ToTable("CourseEnrollments");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Lesson", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Lesson", b =>
                 {
                     b.Property<int>("LessonId")
                         .ValueGeneratedOnAdd()
@@ -249,9 +172,6 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DurationInSeconds")
-                        .HasColumnType("int");
 
                     b.Property<int>("ModuleId")
                         .HasColumnType("int");
@@ -275,19 +195,16 @@ namespace GraduationProjectAlpha.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("Lesson");
+                    b.ToTable("Lessons");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Module", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Module", b =>
                 {
                     b.Property<int>("ModuleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModuleId"));
-
-                    b.Property<int>("DurationInMinutes")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -303,10 +220,10 @@ namespace GraduationProjectAlpha.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("Module");
+                    b.ToTable("Modules");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Question", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Question", b =>
                 {
                     b.Property<int>("QuestionId")
                         .ValueGeneratedOnAdd()
@@ -314,28 +231,81 @@ namespace GraduationProjectAlpha.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuestionId"));
 
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("QuestionCategory")
+                    b.Property<int>("Order")
                         .HasColumnType("int");
 
                     b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("QuestionType")
+                    b.Property<int>("QuizId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RightChoiceIndex")
+                    b.Property<int>("RightChoiceId")
                         .HasColumnType("int");
 
                     b.HasKey("QuestionId");
 
-                    b.ToTable("Question");
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Section", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Quiz", b =>
+                {
+                    b.Property<int>("QuizId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"));
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("QuizId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("Quizzes");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.QuizLessonLinking", b =>
+                {
+                    b.Property<int>("QuizLessonLinkingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizLessonLinkingId"));
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.HasKey("QuizLessonLinkingId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("QuizLessonLinkings");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Section", b =>
                 {
                     b.Property<int>("SectionId")
                         .ValueGeneratedOnAdd()
@@ -344,9 +314,6 @@ namespace GraduationProjectAlpha.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SectionId"));
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -360,10 +327,10 @@ namespace GraduationProjectAlpha.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Section");
+                    b.ToTable("Sections");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Student", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Student", b =>
                 {
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
@@ -382,6 +349,9 @@ namespace GraduationProjectAlpha.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("HasPaid")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -389,58 +359,20 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Sex")
-                        .HasColumnType("int");
-
                     b.HasKey("StudentId");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            StudentId = 1,
-                            DateOfBirth = new DateTime(2001, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "AhmedMahmoud@Mail.com",
-                            FName = "Ahmed",
-                            LName = "Mahmoud",
-                            Level = 12,
-                            PhoneNumber = "1234567890",
-                            Sex = 0
-                        });
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentAssessmentInteraction", b =>
-                {
-                    b.Property<int>("StudentAssessmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentAssessmentId"));
-
-                    b.Property<int>("AssessmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OverallGrade")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("StudentAssessmentId");
-
-                    b.HasIndex("AssessmentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentAssessmentInteraction");
-                });
-
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentLessonInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentLessonInteraction", b =>
                 {
                     b.Property<int>("StudentLessonId")
                         .ValueGeneratedOnAdd()
@@ -454,9 +386,6 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WatchingTimeInSeconds")
-                        .HasColumnType("int");
-
                     b.HasKey("StudentLessonId");
 
                     b.HasIndex("LessonId");
@@ -466,7 +395,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("StudentLessonInteraction");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentQuestionInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentQuestionInteraction", b =>
                 {
                     b.Property<int>("StudentQuestionId")
                         .ValueGeneratedOnAdd()
@@ -477,7 +406,7 @@ namespace GraduationProjectAlpha.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentChoiceIndex")
+                    b.Property<int?>("StudentChoiceId")
                         .HasColumnType("int");
 
                     b.Property<int>("StudentChoiceStatus")
@@ -495,58 +424,233 @@ namespace GraduationProjectAlpha.Migrations
                     b.ToTable("StudentQuestionInteraction");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Assessment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentQuizInteraction", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Module", "Module")
-                        .WithMany("Assessments")
-                        .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<int>("StudentQuizId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Navigation("Module");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentQuizId"));
+
+                    b.Property<int>("OverallGrade")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentQuizId");
+
+                    b.HasIndex("QuizId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentQuizInteraction");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.AssessmentLessonLinking", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
-                        .WithMany("AssessmentLessonLinkings")
-                        .HasForeignKey("AssessmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
-                        .WithMany("AssessmentLessonLinkings")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Navigation("Assessment");
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
-                    b.Navigation("Lesson");
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.AssessmentQuestion", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
-                        .WithMany("AssessmentQuestions")
-                        .HasForeignKey("AssessmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
-                        .WithMany("AssessmentQuestions")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Navigation("Assessment");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Navigation("Question");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Choice", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Choice", b =>
+                {
+                    b.HasOne("GraduationProjectAlpha.Model.Question", "Question")
                         .WithMany("Choices")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -555,15 +659,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Comment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Comment", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
+                    b.HasOne("GraduationProjectAlpha.Model.Lesson", "Lesson")
                         .WithMany("Comments")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
                         .WithMany("Comments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -574,15 +678,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.CommentVote", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.CommentVote", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Comment", "Comment")
+                    b.HasOne("GraduationProjectAlpha.Model.Comment", "Comment")
                         .WithMany("CommentVotes")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
                         .WithMany("CommentVotes")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -593,15 +697,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.CourseEnrollment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.CourseEnrollment", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Course", "Course")
+                    b.HasOne("GraduationProjectAlpha.Model.Course", "Course")
                         .WithMany("CourseEnrollments")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
                         .WithMany("CourseEnrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -612,9 +716,9 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Lesson", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Lesson", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Module", "Module")
+                    b.HasOne("GraduationProjectAlpha.Model.Module", "Module")
                         .WithMany("Lessons")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -623,9 +727,9 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Module", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Module", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Section", "Section")
+                    b.HasOne("GraduationProjectAlpha.Model.Section", "Section")
                         .WithMany("Modules")
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -634,9 +738,50 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Section");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Section", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Question", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Course", "Course")
+                    b.HasOne("GraduationProjectAlpha.Model.Quiz", "Quiz")
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Quiz", b =>
+                {
+                    b.HasOne("GraduationProjectAlpha.Model.Module", "Module")
+                        .WithMany("Quizzes")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Module");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.QuizLessonLinking", b =>
+                {
+                    b.HasOne("GraduationProjectAlpha.Model.Lesson", "Lesson")
+                        .WithMany("AssessmentLessonLinkings")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GraduationProjectAlpha.Model.Quiz", "Quiz")
+                        .WithMany("QuizLessonLinkings")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Section", b =>
+                {
+                    b.HasOne("GraduationProjectAlpha.Model.Course", "Course")
                         .WithMany("Sections")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -645,34 +790,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentAssessmentInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentLessonInteraction", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Assessment", "Assessment")
-                        .WithMany("StudentAssessmentInteractions")
-                        .HasForeignKey("AssessmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
-                        .WithMany("StudentAssessmentInteractions")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Assessment");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentLessonInteraction", b =>
-                {
-                    b.HasOne("GraduationProjectAlpha.Entities.Lesson", "Lesson")
+                    b.HasOne("GraduationProjectAlpha.Model.Lesson", "Lesson")
                         .WithMany("StudentLessonInteractions")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
                         .WithMany("StudentLessonInteractions")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -683,15 +809,15 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.StudentQuestionInteraction", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentQuestionInteraction", b =>
                 {
-                    b.HasOne("GraduationProjectAlpha.Entities.Question", "Question")
+                    b.HasOne("GraduationProjectAlpha.Model.Question", "Question")
                         .WithMany("StudentQuestionInteractions")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GraduationProjectAlpha.Entities.Student", "Student")
+                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
                         .WithMany("StudentQuestionInteractions")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -702,28 +828,89 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Assessment", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.StudentQuizInteraction", b =>
                 {
-                    b.Navigation("AssessmentLessonLinkings");
+                    b.HasOne("GraduationProjectAlpha.Model.Quiz", "Quiz")
+                        .WithMany("StudentQuizInteractions")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("AssessmentQuestions");
+                    b.HasOne("GraduationProjectAlpha.Model.Student", "Student")
+                        .WithMany("StudentAssessmentInteractions")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("StudentAssessmentInteractions");
+                    b.Navigation("Quiz");
+
+                    b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Comment", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Comment", b =>
                 {
                     b.Navigation("CommentVotes");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Course", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Course", b =>
                 {
                     b.Navigation("CourseEnrollments");
 
                     b.Navigation("Sections");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Lesson", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Lesson", b =>
                 {
                     b.Navigation("AssessmentLessonLinkings");
 
@@ -732,28 +919,35 @@ namespace GraduationProjectAlpha.Migrations
                     b.Navigation("StudentLessonInteractions");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Module", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Module", b =>
                 {
-                    b.Navigation("Assessments");
-
                     b.Navigation("Lessons");
+
+                    b.Navigation("Quizzes");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Question", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Question", b =>
                 {
-                    b.Navigation("AssessmentQuestions");
-
                     b.Navigation("Choices");
 
                     b.Navigation("StudentQuestionInteractions");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Section", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Quiz", b =>
+                {
+                    b.Navigation("Questions");
+
+                    b.Navigation("QuizLessonLinkings");
+
+                    b.Navigation("StudentQuizInteractions");
+                });
+
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Section", b =>
                 {
                     b.Navigation("Modules");
                 });
 
-            modelBuilder.Entity("GraduationProjectAlpha.Entities.Student", b =>
+            modelBuilder.Entity("GraduationProjectAlpha.Model.Student", b =>
                 {
                     b.Navigation("CommentVotes");
 
